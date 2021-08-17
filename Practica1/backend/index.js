@@ -1,21 +1,45 @@
 const express = require("express");
+// Libreria que lee el puerto serial
 const SerialPort = require("serialport");
 const ReadLine = require("@serialport/parser-readline");
-
+const { dbConnection } = require("./db/config");
+// El SerialPort puede cambiar dependiendo del equipo
+const port = new SerialPort("COM3", { baudRate: 9600 });
+const parser = port.pipe(new ReadLine({ delimiter: "\n" }));
+// Configurar cliente de mongoDB
+const MongoClient = require('mongodb').MongoClient;
+// variables de entorno
+require("dotenv").config();
+// Cadena de conexión a la base de datos en la nube
+const uri = process.env.BD_CNN;
 // Crear el servidor/aplicación de express
 const app = express();
 
+// Conexion a Base de datos
+dbConnection();
 
-const port = new SerialPort("COM3", { baudRate: 9600 });
-const parser = port.pipe(new ReadLine({delimiter: "\n"}));
 
 port.on("open", () => {
     console.log("Se abrió la comunicación");
+
+    // Objeto de prueba para ver si funciona la base de datos
+    /* let object = {
+        direccion: "sur",
+        velocidad: 10,
+        temperatura: 15,
+        humedad: 15,
+        fecha: new Date()
+    } */
+
+    // Se convierte el objeto JSON a string
+
+    //Inserción de prueba
+    //insertData(JSON.stringify(object));
 })
 
-port.on("data", (data) => {
+parser.on("data", data => {
     console.log(data)
-} )
+});
 
 // Peticion get
 app.get("/", (req, res) => {
@@ -25,6 +49,23 @@ app.get("/", (req, res) => {
     });
 });
 
-app.listen(4000, () => {
-    console.log(`Servidor corriendo en puerto ${4000}`);
+
+const insertData = (data) => {
+
+    MongoClient.connect(uri, (err, db) => {
+        if (err) throw err;
+        const dbo = db.db('dbClima');
+        const obj = JSON.parse(data);
+        console.log(obj);
+        dbo.collection('registro').insertOne(obj, (err, res) => {
+            if (err) throw err;
+            db.close();
+        });
+    });
+}
+
+app.listen(process.env.PORT, () => {
+    console.log(`Servidor corriendo en puerto ${process.env.PORT}`);
+
+
 });
