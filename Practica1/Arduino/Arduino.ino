@@ -22,7 +22,7 @@ void loop()
   lectura=analogRead(A4);
   float val = analogRead(analogPin);
   float voltaje=CalcularVoltaje(val);
-  if (voltaje!=0.0){
+  if (voltaje!=0.0&&voltaje>=0.04){
       velviento=VelocidadViento(voltaje);
     }
   
