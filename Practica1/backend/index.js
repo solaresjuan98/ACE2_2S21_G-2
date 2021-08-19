@@ -10,6 +10,7 @@ const parser = port.pipe(new ReadLine({ delimiter: "\n" }));
 const MongoClient = require('mongodb').MongoClient;
 // variables de entorno
 require("dotenv").config();
+const { response } = require("express");
 // Cadena de conexión a la base de datos en la nube
 const uri = process.env.BD_CNN;
 // Crear el servidor/aplicación de express
@@ -17,6 +18,8 @@ const app = express();
 
 // Conexion a Base de datos
 dbConnection();
+
+const collectionName = "dbClima";
 
 
 port.on("open", () => {
@@ -39,9 +42,11 @@ port.on("open", () => {
 
 parser.on("data", data => {
     console.log(data)
+    //insertData(data);
 });
 
 // Peticion get
+// endpoint: http://localhost:4000/
 app.get("/", (req, res) => {
     res.json({
         ok: true,
@@ -49,7 +54,23 @@ app.get("/", (req, res) => {
     });
 });
 
+// Peticion get para obtener todos los registros
+// endpoint: http://localhost:4000/registros
+app.get("/registros", async (req, res) => {
 
+    MongoClient.connect(uri, (err, db) => {
+
+        if (err) throw err;
+        const dbo = db.db('dbClima');
+        dbo.collection('registro').find().toArray((err, response) => {
+            if (err) throw err;
+            res.json(response);
+        })
+    })
+
+})
+
+// Funcion para insertar en la base de datos
 const insertData = (data) => {
 
     MongoClient.connect(uri, (err, db) => {
@@ -66,6 +87,4 @@ const insertData = (data) => {
 
 app.listen(process.env.PORT, () => {
     console.log(`Servidor corriendo en puerto ${process.env.PORT}`);
-
-
 });
