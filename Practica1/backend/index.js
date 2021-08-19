@@ -23,24 +23,16 @@ dbConnection();
 port.on("open", () => {
     console.log("Se abrió la comunicación");
 
-    // Objeto de prueba para ver si funciona la base de datos
-    /* let object = {
-        direccion: "sur",
-        velocidad: 10,
-        temperatura: 15,
-        humedad: 15,
-        fecha: new Date()
-    } */
-
-    // Se convierte el objeto JSON a string
-
-    //Inserción de prueba
-    //insertData(JSON.stringify(object));
 })
 
 parser.on("data", data => {
-    console.log(data)
-    //insertData(data);
+    console.log(data);
+
+    setTimeout(() => {
+        insertData(data);
+    }, 100);
+        
+
 });
 
 // Peticion get
@@ -51,6 +43,21 @@ app.get("/", (req, res) => {
         message: "Mensaje de prueba",
     });
 });
+
+// Peticion get para obtener el ultimo registro
+app.get("/ultimoRegistro", (req, res) => {
+
+    MongoClient.connect(uri, (err, db) => {
+
+        if (err) throw err;
+        const dbo = db.db('dbClima');
+        dbo.collection('registro').find().toArray((err, response) => {
+            if (err) throw err;
+            res.json(response[response.length - 1]);
+        })
+    })
+
+})
 
 // Peticion get para obtener todos los registros
 // endpoint: http://localhost:4000/registros
