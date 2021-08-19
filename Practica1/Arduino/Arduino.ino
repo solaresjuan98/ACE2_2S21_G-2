@@ -13,12 +13,12 @@ void setup()
   Serial.begin(9600);
   dht.begin();
   
-  delay(10);
+  delay(50);
 }
 
 void loop() 
 {
-  delay(500);
+  delay(200);
   lectura=analogRead(A4);
   float val = analogRead(analogPin);
   float voltaje=CalcularVoltaje(val);
@@ -33,26 +33,50 @@ void loop()
   if(isnan(humidity) || isnan(temperature) || isnan(temperatureF))
   {
     Serial.println("Error en la lectura del sensor");
-    return;
+    //return;
   }
 
  
 
-  Serial.print("Humidity: ");
-  Serial.print(humidity);
-  Serial.print("% Temperature: ");
-  Serial.print(temperature);
-  Serial.print("°C ");
-  Serial.print(temperatureF);
-  Serial.print("°F Heat Index: ");
-  Serial.print("Velocidad del Viento: ");
-  Serial.print(velviento);
-  Serial.print("Km/h");
-  Serial.println("");
-  Serial.println(lectura);
-  Serial.println(voltaje);
+
+  Serial.println( json_converter(direccion(lectura),velviento,temperature,humidity));
+  
  
 
+}
+String json_converter(char d, float v, float t, float h){
+  String json="";
+  /*json.concat(d);
+  json+=",";
+  json.concat(v);
+  json+=",";
+  json.concat(t);
+  json+=",";
+  json.concat(h);
+  */
+  json+="{";
+  json+="\"t\":";
+  json.concat(t);
+  json+=",\"h\":";
+  json.concat(h);
+  json+=",\"v\":";
+  json.concat(v);
+  json+=",\"d\":\"";
+  json.concat(d);
+  json+="\"}";
+  return json;
+}
+char direccion(float dato_direccion){
+    if(dato_direccion<=301){
+      return 'S';
+    }else if(dato_direccion>301&&dato_direccion<=737){
+      return 'O';
+    }else if(dato_direccion>737&&dato_direccion<=1003){
+      return 'N';
+    }else if(dato_direccion>1003){
+      return 'E';
+    }
+    return '?';
 }
 float CalcularVoltaje(float ingreso){
   float retorno=0.0;

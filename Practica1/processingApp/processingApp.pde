@@ -1,4 +1,8 @@
-PFont font; //<>//
+import processing.serial.*; //<>//
+
+Serial puerto;
+
+PFont font;
 PFont font2;
 ArrayList<direccionViento> dirViento = new ArrayList<direccionViento>();
 Humedad porHumedad = new Humedad();
@@ -7,31 +11,58 @@ Temperatura tempe = new Temperatura();
 velocidadViento velViento = new velocidadViento();
 
 //Variables para recibir los valores de Arduino
-float medVelViento;
-char medDirViento;
-float medHumedad;
-float medTemperatura;
+float medVelViento=0;
+char medDirViento='a';
+float medHumedad=0;
+float medTemperatura=0;
+JSONObject json;
 
 void setup() {
   size(1280, 720);
   for (int i = 0; i < 150; i++) {
     dirViento.add(new direccionViento());
   }
+  actualizarDatos();
+/*  println(Serial.list());
+  puerto= new Serial(this,Serial.list()[0],9600);
+  puerto.bufferUntil('\n');*/
+  
 }
+/*
+void serialEvent(Serial puerto) {
+  String dato = puerto.readStringUntil('\n');
+  if (dato != null) {
+    String [] a = dato.split(",");
+    medVelViento = float(a[1]);
+    medDirViento = a[0].charAt(0);
+    medHumedad = float(a[3]);
+    medTemperatura = float(a[2]);
+  }
+}*/
 
+int p=0;
 void draw() {
   //Variables que reciben los datos de Arduino
-  medVelViento = 10; //float
-  medDirViento = 'O'; //char
-  medHumedad = 60; //float
-  medTemperatura = 0; //float
-  
+  p++;
+  if(p>=50){
+    actualizarDatos();
+    p=0;
+  }
   divisiones();
   encabezados();
   veloViento(medVelViento);
   direViento(medDirViento);
   nivelHumedad(medHumedad);
   nivelTemp(medTemperatura);
+  
+}
+void actualizarDatos(){
+  String []texto=loadStrings("http://localhost:4000/ultimoRegistro");
+  json=parseJSONObject(texto[0]);
+  medTemperatura=json.getFloat("t");
+  medVelViento=json.getFloat("v");
+  medDirViento=json.getString("d").charAt(0);
+  medHumedad=json.getFloat("h");
 }
 
 void veloViento(float vel) {
