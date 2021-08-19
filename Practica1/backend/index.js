@@ -19,8 +19,6 @@ const app = express();
 // Conexion a Base de datos
 dbConnection();
 
-const collectionName = "dbClima";
-
 
 port.on("open", () => {
     console.log("Se abrió la comunicación");
