@@ -1,5 +1,4 @@
 import processing.serial.*; //<>//
-
 Serial puerto;
 
 PFont font;

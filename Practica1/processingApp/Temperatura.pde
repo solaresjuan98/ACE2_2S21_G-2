@@ -46,19 +46,27 @@ class Temperatura {
     for (Temperatura t : this.cuadros) {
       if (this.contador < 20) {
         fill(#BFEDFF);
+        pos = t.x;
+        rect(t.x, 460, 11.6, 20);
       } else if (this.contador >= 20 && this.contador < 35) {
         fill(#FFB40F);
+        pos = t.x;
+        rect(t.x, 460, 11.6, 20);
       } else if (this.contador >= 35 && this.contador <= 50) {
         fill(#EA332D);
+        pos = t.x;
+        rect(t.x, 460, 11.6, 20);
       }
-      rect(t.x, 460, 11.6, 20);
       this.contador++;
-      pos = t.x;
     }
     if (this.actual <= 0) {
       fill(#BFEDFF);
       textSize(24);
       text(str(this.actual) + " C", 670, 430, 200, 50);
+    } else if (this.actual > 50) {
+      fill(#EA332D);
+      textSize(24);
+      text(str(this.actual) + " C", 1180, 430, 200, 50);
     } else {
       textSize(24);
       text(str(this.actual) + " C", pos - 20, 430, 200, 50);
