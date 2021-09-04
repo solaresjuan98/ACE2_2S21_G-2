@@ -54,15 +54,16 @@ void UltraSonico() {
 
   distancia = duracion * 340 / (2 * 10000);
 
-  if (distancia <= 30) {
-    Serial.println(distancia);
-    Serial.println(" cm ");
-    bas();
-  }
-  else {
+  if ((distancia >=40 && distancia <= 60)) {
     Serial.println(distancia);
     Serial.println(" cm ");
     
+  }
+  else {
+    Serial.print("USTED ESTA SENTADO ");
+    Serial.println(distancia);
+    Serial.println(" cm ");
+    bas();
   }
 
   delay(1000);
@@ -71,7 +72,7 @@ void UltraSonico() {
 void bas(){
   #ifdef DEBUG_HX711
   Serial.print("[HX7] Leyendo: ");
-  Serial.print(bascula.get_units(), 1);
+  Serial.print(bascula.get_units()*-1, 1);
   Serial.print(" Kg");
   Serial.println();
   #endif
