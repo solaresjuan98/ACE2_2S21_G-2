@@ -16,6 +16,8 @@ byte pinClk = 2;
 
 // Objeto HX711
 HX711 bascula;
+float peso = 0;
+String sentado = "";
 
 void setup() {
 
@@ -23,6 +25,7 @@ void setup() {
   // Iniciar comunicación serie
   Serial.begin(9600);
   Serial.println("[HX7] Inicio del sensor HX711");
+  
 #endif
 
   // Iniciar sensor
@@ -32,9 +35,12 @@ void setup() {
   // Iniciar la tara
   // No tiene que haber nada sobre el peso
   bascula.tare();
+  
 
   pinMode(trigPin, OUTPUT);  //Trig
   pinMode(echoPin, INPUT);   //Echo
+
+  
 }
 
 void loop() {
@@ -54,16 +60,21 @@ void UltraSonico() {
 
   distancia = duracion * 340 / (2 * 10000);
 
-  if ((distancia >=40 && distancia <= 60)) {
+  if ((distancia >=40 && distancia <= 900)) {
     Serial.println(distancia);
-    Serial.println(" cm ");
+    Serial.print(" cm ");
+    sentado = "false";
+    Serial.println( json_converter(peso,sentado));
     
   }
   else {
     Serial.print("USTED ESTA SENTADO ");
     Serial.println(distancia);
-    Serial.println(" cm ");
+    Serial.print(" cm ");
+    peso =  bascula.get_units()*-1;
+    sentado = "true";
     bas();
+    
   }
 
   delay(1000);
@@ -72,8 +83,28 @@ void UltraSonico() {
 void bas(){
   #ifdef DEBUG_HX711
   Serial.print("[HX7] Leyendo: ");
-  Serial.print(bascula.get_units()*-1, 1);
-  Serial.print(" Kg");
-  Serial.println();
+  //Serial.print(peso, 1);
+  //Serial.print(" Kg");
+  //Serial.println();
+  Serial.println( json_converter(peso,sentado));
   #endif
   }
+String json_converter(float p, String b){
+  String json="";
+  /*json.concat(d);
+  json+=",";
+  json.concat(v);
+  json+=",";
+  json.concat(t);
+  json+=",";
+  json.concat(h);
+  */
+  json+="{";
+  json+="\"pesoEnKg\":";
+  json.concat(p);
+  json+=",\"sentado\":";
+  json.concat(b);
+  json+="}";
+  return json;
+}
+ 
