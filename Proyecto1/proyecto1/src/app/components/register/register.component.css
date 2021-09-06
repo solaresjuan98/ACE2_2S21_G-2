@@ -1,0 +1,26 @@
+object {
+    width: 75%;
+    height: 75%;
+  }
+  
+  .container-fluid {
+    display: flex;
+    align-items: center;
+  }
+  
+  .login-title {
+    color: whitesmoke;  
+    font-size: 1rem;
+  }
+  
+  .vertical-align-col {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center
+  }
+  
+  .bg-google{
+    background-color: #EA4335;
+    color: whitesmoke;
+  }

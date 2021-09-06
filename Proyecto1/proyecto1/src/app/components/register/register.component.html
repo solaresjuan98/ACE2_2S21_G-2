@@ -1,0 +1,41 @@
+<div class="container-fluid border border-3 rounded m-4 p-4  shadow">
+    <div class="row">
+      <div class="col-md-6 vertical-align-col">
+        <object data="../../../assets/register.svg"> </object>
+      </div>
+      <div class="col-md-6">
+        <div class="row m-4 w-100 text-white">
+          <div class="col-md-6 offset-md-6 text-center rounded shadow-lg bg-dark">
+            <div class="login-title">Register</div>
+          </div>
+        </div>
+        <form novalidate [formGroup]="registerForm" (ngSubmit)="onRegister()">
+          <div class="form-group">
+            <label class="form-label" for="exampleInputEmail1"><i class="fas fa-envelope"></i> Email address</label>
+            <input type="email" class="form-control" name="email" id="email" aria-describedby="emailHelp"
+              formControlName="email" placeholder="Enter email">
+            <div class="invalid-feedback">
+              <span *ngIf="registerForm.get('email').errors?.required">
+                <strong>Por favor, introduzca un email.</strong>
+              </span>
+              <span *ngIf="registerForm.get('email').errors?.pattern">
+                <strong>Correo electronico no valido.</strong>
+              </span>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="exampleInputPassword1"><i class="fas fa-lock"></i> Password</label>
+            <input type="password" class="form-control" name="password" id="password" placeholder="Password"
+              formControlName="password">
+            <div class="invalid-feedback">
+              <span *ngIf="registerForm.get('password').errors?.required">
+                <strong>Por favor, introduzca un password.</strong>
+              </span>
+            </div>
+          </div>
+          <button type="submit" class="btn btn-success btn-block">Register <i class="fas fa-arrow-right"></i></button>
+          <hr>
+        </form>
+      </div>
+    </div>
+  </div>
