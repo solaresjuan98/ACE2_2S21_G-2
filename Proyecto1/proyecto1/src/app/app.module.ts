@@ -14,6 +14,7 @@ import {AngularFireAuthModule} from '@angular/fire/compat/auth';
 import {AngularFireModule} from '@angular/fire/compat/'
 import { environment } from 'src/environments/environment';
 import { RegisterComponent } from './components/register/register.component';
+import { HomeComponent } from './components/home/home.component';
 
 
 @NgModule({
@@ -22,7 +23,8 @@ import { RegisterComponent } from './components/register/register.component';
     NavbarComponent,
     LoginComponent,
     SpinnerComponent,
-    RegisterComponent
+    RegisterComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,

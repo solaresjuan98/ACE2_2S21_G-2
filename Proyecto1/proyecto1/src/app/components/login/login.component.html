@@ -1,4 +1,4 @@
-<div class="container-fluid border border-3 rounded m-4 p-4  shadow">
+<div class="container-fluid border border-3 rounded m-4 p-4 card-login shadow card">
   <div class="row">
     <div class="col-md-6 vertical-align-col">
       <object data="../../../assets/login.svg"> </object>
@@ -11,10 +11,9 @@
       </div>
       <form novalidate [formGroup]="loginForm" (ngSubmit)="onLogin()">
         <div class="form-group">
-          <label class="form-label" for="exampleInputEmail1"><i class="fas fa-envelope"></i> Email address</label>
+          <label class="form-label" for="exampleInputEmail1"><i class="fas fa-envelope"></i> Correo</label>
           <input type="email" class="form-control" name="email" id="email" aria-describedby="emailHelp"
-            formControlName="email" placeholder="Enter email">
-          <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+            formControlName="email">
           <div class="invalid-feedback">
             <span *ngIf="loginForm.get('email').errors?.required">
               <strong>Por favor, introduzca un email.</strong>
@@ -25,9 +24,8 @@
           </div>
         </div>
         <div class="form-group">
-          <label class="form-label" for="exampleInputPassword1"><i class="fas fa-lock"></i> Password</label>
-          <input type="password" class="form-control" name="password" id="password" placeholder="Password"
-            formControlName="password">
+          <label class="form-label" for="exampleInputPassword1"><i class="fas fa-lock"></i> Contraseña</label>
+          <input type="password" class="form-control" name="password" id="password" formControlName="password">
           <div class="invalid-feedback">
             <span *ngIf="loginForm.get('password').errors?.required">
               <strong>Por favor, introduzca un password.</strong>
@@ -36,13 +34,14 @@
         </div>
         <div class="row">
           <hr>
-          <a routerLink="/register">¿Aun no te has registrado?</a>
+          <a routerLink="/register" style="color: dodgerblue;">¿Aun no te has registrado?</a>
           <hr>
         </div>
-        <button type="submit" class="btn btn-success btn-block">Sign in <i class="fas fa-arrow-right"></i></button>
+        <button type="submit" class="btn btn-success btn-block">Ingresar <i class="fas fa-arrow-right"></i></button>
         <hr>
       </form>
-      <button (click)="logInwithGoogle()" class="btn bg-google btn-block">Sign in with Google <i class="fab fa-google"></i></button>
+      <button (click)="logInwithGoogle()" class="btn bg-google btn-block">Ingresa con Google <i
+          class="fab fa-google"></i></button>
     </div>
   </div>
 </div>

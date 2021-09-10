@@ -24,3 +24,7 @@ object {
     background-color: #EA4335;
     color: whitesmoke;
   }
+
+  .card-login {
+    width: 60rem;
+  }
