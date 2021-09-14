@@ -7,10 +7,10 @@ import { ReportesComponent } from './components/reportes/reportes.component';
 import { SillaComponent } from './components/silla/silla.component';
 import { TiemporealComponent } from './components/tiemporeal/tiemporeal.component';
 import { MenorUsoComponent } from './graficas/menor-uso/menor-uso.component';
-import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { HorarioUsoComponent } from './graficas/horario-uso/horario-uso.component';
 import { TiempoUsoComponent } from './graficas/tiempo-uso/tiempo-uso.component';
 import { MayorUsoComponent } from './graficas/mayor-uso/mayor-uso.component';
+import { RegistroPesoComponent } from './graficas/registro-peso/registro-peso.component';
 
 const routes: Routes = [
   {
@@ -42,26 +42,26 @@ const routes: Routes = [
     path:'home/tiempoReal',
     component: TiemporealComponent
   },
-  {
-    path:'dashboard',
-    component: DashboardComponent
-  },
   // Graficas
   {
-    path: 'menorUso',
+    path: 'home/menorUso',
     component: MenorUsoComponent
   },
   {
-    path: 'mayorUso',
+    path: 'home/mayorUso',
     component: MayorUsoComponent
   },
   {
-    path: 'horarioUso',
+    path: 'home/horarioUso',
     component: HorarioUsoComponent
   },
   {
-    path: 'historialTiempoUso',
+    path: 'home/historialTiempoUso',
     component: TiempoUsoComponent
+  },
+  {
+    path: 'home/mi-peso',
+    component: RegistroPesoComponent
   }
   
 ];

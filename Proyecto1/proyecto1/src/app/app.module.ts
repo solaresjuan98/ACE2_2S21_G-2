@@ -21,10 +21,10 @@ import { TiemporealComponent } from './components/tiemporeal/tiemporeal.componen
 import { MenorUsoComponent } from './graficas/menor-uso/menor-uso.component';
 import { MayorUsoComponent } from './graficas/mayor-uso/mayor-uso.component';
 import { MenuComponent } from './components/menu/menu.component';
-import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { ChartsModule } from 'ng2-charts';
 import { HorarioUsoComponent } from './graficas/horario-uso/horario-uso.component';
 import { TiempoUsoComponent } from './graficas/tiempo-uso/tiempo-uso.component';
+import { RegistroPesoComponent } from './graficas/registro-peso/registro-peso.component';
 
 
 @NgModule({
@@ -37,13 +37,13 @@ import { TiempoUsoComponent } from './graficas/tiempo-uso/tiempo-uso.component';
     HomeComponent,
     ReportesComponent,
     SillaComponent,
-    TiemporealComponent
+    TiemporealComponent,
     MenorUsoComponent,
     MayorUsoComponent,
     MenuComponent,
-    DashboardComponent,
     HorarioUsoComponent,
-    TiempoUsoComponent
+    TiempoUsoComponent,
+    RegistroPesoComponent
   ],
   imports: [
     BrowserModule,

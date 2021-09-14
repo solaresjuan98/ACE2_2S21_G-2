@@ -3,12 +3,12 @@ import { ChartDataSets, ChartOptions, ChartType } from 'chart.js';
 import { BaseChartDirective, Color, Label } from 'ng2-charts';
 
 @Component({
-  selector: 'app-horario-uso',
-  templateUrl: './horario-uso.component.html',
+  selector: 'app-registro-peso',
+  templateUrl: './registro-peso.component.html',
   styles: [
   ]
 })
-export class HorarioUsoComponent implements OnInit {
+export class RegistroPesoComponent implements OnInit {
 
   public lineChartData: ChartDataSets[] = [
     { data: [65, 59, 80, 81, 56, 55, 40], label: 'Series A' },
