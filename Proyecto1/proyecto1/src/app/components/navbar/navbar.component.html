@@ -9,14 +9,21 @@
         <div class="collapse navbar-collapse" id="navbarColor01">
             <ul class="navbar-nav me-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="home/reportes">Reportes Gráficos</a>
+                    <a class="nav-link" routerLink="/dashboard">Dashboard</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="home/tiempoReal">Tiempo Real</a>
+                    <a class="nav-link" routerLink="/menorUso">Menor uso</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="home/registroSilla">Registrar Silla</a>
+                    <a class="nav-link" routerLink="/mayorUso">Mayor uso</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" routerLink="/horarioUso">Horario uso</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" routerLink="/historialTiempoUso">Historial uso</a>
+                </li>
+                
             </ul>
             <form class="d-flex">
                 <button class="btn btn-outline-danger" type="submit" (click)="cerrarSesion()">Cerrar Sesión</button>
