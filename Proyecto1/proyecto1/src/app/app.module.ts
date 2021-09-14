@@ -15,6 +15,9 @@ import {AngularFireModule} from '@angular/fire/compat/'
 import { environment } from 'src/environments/environment';
 import { RegisterComponent } from './components/register/register.component';
 import { HomeComponent } from './components/home/home.component';
+import { ReportesComponent } from './components/reportes/reportes.component';
+import { SillaComponent } from './components/silla/silla.component';
+import { TiemporealComponent } from './components/tiemporeal/tiemporeal.component';
 
 
 @NgModule({
@@ -24,7 +27,10 @@ import { HomeComponent } from './components/home/home.component';
     LoginComponent,
     SpinnerComponent,
     RegisterComponent,
-    HomeComponent
+    HomeComponent,
+    ReportesComponent,
+    SillaComponent,
+    TiemporealComponent
   ],
   imports: [
     BrowserModule,
