@@ -30,8 +30,6 @@ export async function insertData(fecha_registro: any,hora_inicio:any,hora_final:
         console.error(error);
     }
     
-    
-    
 }
 
 // =======================================
@@ -148,6 +146,17 @@ export async function getHistorialUso(req:Request, res: Response): Promise<Respo
         group by fecha, registro.hora_inicio, registro.hora_final", [id]);
 
     return res.json(arrRespuesta[0]);
+}
+
+
+export async function insertUsuario(req:Request, res:Response):Promise<any>{
+    try {
+        const connection = await connect();
+        await connection.query(`insert into usuario values(null, '${req.body.correo}','${req.body.password}');`); 
+        res.send("Usuario creado");
+    } catch (error) {
+        res.sendStatus(400);
+    }
 }
 
 

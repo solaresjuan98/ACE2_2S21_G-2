@@ -39,6 +39,7 @@ export class LoginComponent implements OnInit {
           </strong>`, 'success');
           this.spinner.stopSpinner();
           /* SE REDIRIGE AL USUARIO A LA VENTANA PRINCIPAL*/
+          location.pathname = '/home';
         }).catch(() => {
           Swal.fire('Credenciales incorrectas', `<strong>
           Las credenciales que ingreso son incorrectas.
@@ -56,6 +57,25 @@ export class LoginComponent implements OnInit {
       Por favor, llene todos los campos de manera correcta.
       </strong>`, 'error');
     }
+  }
+
+  logInwithGoogle() {
+    this.spinner.getSpinner();
+    this.authService.loginWithGoogle().then(() => {
+      Swal.fire('Bienvenido', `<strong>
+          Logeado exitosamente
+          </strong>`, 'success');
+          this.spinner.stopSpinner();
+          location.pathname = '/home';
+    }).catch((error) => {
+      Swal.fire('Credenciales incorrectas', `<strong>
+          Las credenciales que ingreso son incorrectas.
+         </strong>`, 'error');
+         this.spinner.stopSpinner();
+      this.spinner.stopSpinner();
+    }).catch(() => {
+      this.spinner.stopSpinner();
+    })
   }
   isValidData(): String {
     if (this.loginForm.valid) {
@@ -83,22 +103,6 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  logInwithGoogle() {
-    this.spinner.getSpinner();
-    this.authService.loginWithGoogle().then(() => {
-      Swal.fire('Bienvenido', `<strong>
-          Logeado exitosamente
-          </strong>`, 'success');
-          this.spinner.stopSpinner();
-    }).catch((error) => {
-      Swal.fire('Credenciales incorrectas', `<strong>
-          Las credenciales que ingreso son incorrectas.
-         </strong>`, 'error');
-         this.spinner.stopSpinner();
-      this.spinner.stopSpinner();
-    }).catch(() => {
-      this.spinner.stopSpinner();
-    })
-  }
+
 
 }
