@@ -152,7 +152,8 @@ export async function getHistorialUso(req:Request, res: Response): Promise<Respo
 export async function insertUsuario(req:Request, res:Response):Promise<any>{
     try {
         const connection = await connect();
-        await connection.query(`insert into usuario values(null, '${req.body.correo}','${req.body.password}');`); 
+        //await connection.query(`insert into usuario values`)
+        await connection.query(`insert into usuario values('${req.body.correo}','${req.body.password}');`); 
         res.send("Usuario creado");
     } catch (error) {
         res.sendStatus(400);
