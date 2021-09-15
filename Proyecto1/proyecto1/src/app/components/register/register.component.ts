@@ -14,7 +14,7 @@ import Swal from 'sweetalert2'
 export class RegisterComponent implements OnInit {
 
   registerForm: FormGroup;
-  passwordType: string = 'password'
+  passwordType: string = 'password';
   private emailPattern = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/;
 
   constructor(private fb: FormBuilder, private spinner: SpinnerService,
@@ -24,6 +24,7 @@ export class RegisterComponent implements OnInit {
   ngOnInit(): void {
     this.initForm();
   }
+
   validField(fieldName: string): string {
     const validatedField = this.registerForm.get(fieldName);
     return (!validatedField?.valid && validatedField?.touched)
@@ -31,8 +32,13 @@ export class RegisterComponent implements OnInit {
   }
 
   onRegister() {
+
+    console.log(this.registerForm);
+    console.log(this.registerForm.valid);
+
     if (this.registerForm.valid) {
       const { email, password } = this.registerForm.value;
+
       try {
         this.spinner.getSpinner();
         this.authService.register(email, password).then(() => {
@@ -80,7 +86,7 @@ export class RegisterComponent implements OnInit {
     this.registerForm = this.fb.group({
       // Estructura [valor inicial, validaciones  ]
       email: ['', [Validators.required]],
-      name: ['', [Validators.required]],
+      //name: ['', [Validators.required]],
       password: ['', [Validators.required]]
     });
   }
