@@ -44,10 +44,27 @@ port.on("open", () => {
     insertData(objTest);*/
     console.log("se abrió la comunicación :v")
 })
+//Variables Globales
+var bandera1=true
+var bandera2=true
+var inicio=""
 
 parser.on("data", (data: any) => {
-    console.log("data");
 
+    let json=JSON.parse(data);
+    if(json.sentado&&json.pesoEnKg>0.15){
+        console.log("Insertando "+json.pesoEnKg+" Kg");
+        if(bandera1){
+            var hoy:Date=new Date()
+            var fecha=hoy.getFullYear()+"-"+(hoy.getMonth()+1)+"-"+hoy.getDate();
+            console.log("Fecha:"+fecha);
+            var hora=hoy.getHours() + ':' + hoy.getMinutes() + ':' + hoy.getSeconds();
+            console.log("Hora:"+hora);
+            inicio=fecha+" "+hora
+            bandera1=false
+        
+        }
+    }
     // Funcion para guardar data en la bd (con timeout)
 
 })
