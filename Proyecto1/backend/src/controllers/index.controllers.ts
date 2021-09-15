@@ -15,12 +15,23 @@ export async function getTest(req: Request, res: Response): Promise<Response> {
     return res.json(info[0]);
 }
 
-export async function insertData(data: any) {
-    console.log(data);
+export async function insertData(fecha_registro: any,hora_inicio:any,hora_final:any,peso:any,silla:any) {
+    
     const connection = await connect();
-    await connection.query("INSERT INTO TEST SET ?", [data]);
-
-    console.log("Insertado!!!");
+    console.log("Insertando...");
+    
+    try {
+       // await connection.query("INSERT INTO TEST SET ?", [data]);
+       // await connection.query("INSERT INTO registro SET ?,?,?,?,?",[fecha_registro,hora_inicio,hora_final,peso,silla]);
+       await connection.query("insert into registro(fecha_registro,hora_inicio,hora_final,peso_registrado,id_silla) values('"+String(fecha_registro)+"','"+String(hora_inicio)+"','"+String(hora_final)+"',"+String(peso)+","+String(silla)+")");
+        console.log("----------------->Insertado!!!");
+        connection.end();
+    } catch (error) {
+        console.error(error);
+    }
+    
+    
+    
 }
 
 // =======================================
