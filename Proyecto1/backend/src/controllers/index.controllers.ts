@@ -162,7 +162,7 @@ export async function getHistorialUso(req: Request, res: Response): Promise<Resp
         from registro \
                 join silla s on s.id_silla = registro.id_silla \
                 join usuario u on u.id_usuario = s.id_usuario \
-        where u.id_usuario = 1 \
+        where u.id_usuario = ? \
         group by fecha, registro.hora_inicio, registro.hora_final order by fecha asc", [id]);
 
     return res.json(arrRespuesta[0]);
@@ -266,6 +266,39 @@ export async function getMaximoHorasSeguidas(req: Request, res: Response): Promi
     console.log(grafica);
     return res.json(grafica.datos);
 
+
+}
+
+export async function getIdUsuario(req:Request, res: Response) {
+    
+    const correo = req.params.correo_electronico;
+    const connection = await connect();
+
+    const resp = await connection.query(` select id_usuario
+    from usuario
+    where correo_usuario = '${correo}'`, [correo])
+
+    return res.json(resp[0]);
+
+
+
+}
+
+// ==== Obtener sillas del usuario
+export async function getSillasUsuario(req:Request, res: Response) {
+    
+    const id = req.params.id_usuario;
+    const connection = await connect();
+
+    const resp = await connection.query('select id_silla, nombre_silla, ubicacion_silla \
+        from silla \
+        where id_usuario = ?', [id])
+
+
+        const arr = JSON.stringify(resp[0]);
+        const arregloParseado: any[] = JSON.parse(arr);
+
+    return res.json(arregloParseado)
 
 }
 

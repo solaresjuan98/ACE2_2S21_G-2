@@ -23,10 +23,15 @@ import {
     getDiasMayorUso,
     getDiasMenorUso,
     registrarSilla,
-    getMaximoHorasSeguidas
+    getMaximoHorasSeguidas,
+    getIdUsuario,
+    getSillasUsuario
 } from '../controllers/index.controllers'
 
 router.route('/').get(getTest);
+// Obetemer ID del usuario por correo electronico
+router.route('/usuario/:correo_electronico').get(getIdUsuario);
+
 // Historial de peso de uso del usuario
 router.route('/historialPeso/usuario/:id_usuario').get(getHistorialPeso);
 // Numero de veces promedio que se levanta el usuario
@@ -43,6 +48,9 @@ router.route('/diasMayorUso/usuario/:id_usuario').get(getDiasMayorUso);
 router.route('/diasMenorUso/usuario/:id_usuario').get(getDiasMenorUso);
 // Obtener el maximo de horas seguidas que se hizo uso de la silla por día
 router.route('/maxHorasSeguidas/usuario/:id_usuario').get(getMaximoHorasSeguidas);
+
+// Obtener sillas del usuario por id
+router.route('/sillas/usuario/:id_usuario').get(getSillasUsuario);
 
 // Insertar silla
 router.route('/registrarSilla').post(registrarSilla);
