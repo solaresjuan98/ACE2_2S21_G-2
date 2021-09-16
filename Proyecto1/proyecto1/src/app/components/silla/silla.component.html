@@ -13,18 +13,15 @@
             </div>
         </form>
 
-        <label class="visually-hidden" for="ubicacion">Ubicación</label>
-        <div class="mb-5">
-            <select class="form-select" id="ubicacion" style="width: 12rem;">
-                <option selected>--Elija--</option>
-                <option value="1">One</option>
-                <option value="2">Two</option>
-                <option value="3">Three</option>
-            </select>
-        </div>
+        <form class="alcentro mb-5">
+            <div>
+                <label class="visually-hidden" for="autoSizingInput">Ubicación</label>
+                <input type="text" class="form-control" id="ubicacion">
+            </div>
+        </form>
 
         <div class="mb-5">
-            <button type="submit" class="btn btn-primary" style="width: 12rem;">Registrar</button>
+            <button type="submit" class="btn btn-primary" style="width: 12rem;" (click)="registrarSilla()">Registrar</button>
         </div>
     </div>
 </div>
