@@ -103,6 +103,9 @@ export class RegistroPesoComponent implements OnInit {
 
         this.lineChartLabels = labels;
         this.lineChartData[0].data = values;
+
+        this.lineChartLabels[this.lineChartLabels.length] = '';
+        this.lineChartData[0].data[this.lineChartData[0].data.length] = 0;
       })
 
   }

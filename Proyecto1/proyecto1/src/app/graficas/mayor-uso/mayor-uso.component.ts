@@ -27,7 +27,7 @@ export class MayorUsoComponent implements OnInit {
   public barChartLegend = true;
 
   public barChartData: ChartDataSets[] = [
-    { data: [ ], label: 'Series A' }
+    { data: [], label: 'Tiempo (en horas)' }
   ];
 
   public colors: Color[] = [
@@ -47,16 +47,26 @@ export class MayorUsoComponent implements OnInit {
 
   ngOnInit(): void {
     this.reportesService.getDiasdeMasUso()
-    .subscribe(({ labels, values }) => {
-      
-      this.barChartLabels = labels;
-      this.barChartData[0].data = values;
+      .subscribe(({ labels, values }) => {
+        console.log(labels);
+        console.log(values);
 
-      this.barChartLabels[this.barChartLabels.length] = '';
-      this.barChartData[0].data[this.barChartData[0].data.length] = 0;
+        // Formatear las fechas
+        for (let i = 0; i < labels.length; i++) {
+          let date = new Date(labels[i]);
+          let currentMonth = date.getMonth() + 1;
+
+          this.barChartLabels.push(date.getDate() + "/" + currentMonth + "/" + date.getFullYear())
+        }
+
+        //this.barChartLabels = labels;
+        this.barChartData[0].data = values;
+
+        this.barChartLabels[this.barChartLabels.length] = '';
+        this.barChartData[0].data[this.barChartData[0].data.length] = 0;
 
 
-    })
+      })
   }
 
   // events

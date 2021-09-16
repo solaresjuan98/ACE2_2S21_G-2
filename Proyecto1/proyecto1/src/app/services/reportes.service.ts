@@ -48,7 +48,7 @@ export class ReportesService {
   }
 
   getDiasdeMasUso(){
-    return this.http.get("http://localhost:3000/diasMayorUso/usuario/1")
+    return this.http.get("http://localhost:3000/maxHorasSeguidas/usuario/1")
       .pipe(
         map(data => {
           const labels = Object.keys(data);
@@ -59,6 +59,21 @@ export class ReportesService {
 
         })
       )
+  }
+
+
+  getDiasdeMenosUso() {
+    return this.http.get("http://localhost:3000/diasMenorUso/usuario/1")
+    .pipe(
+      map(data => {
+        const labels = Object.keys(data);
+        const values = Object.values(data);
+
+        //console.log(labels, values);
+        return { labels, values };
+
+      })
+    )
   }
 
 }
