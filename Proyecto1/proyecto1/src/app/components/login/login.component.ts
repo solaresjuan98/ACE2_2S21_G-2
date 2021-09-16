@@ -39,6 +39,7 @@ export class LoginComponent implements OnInit {
           </strong>`, 'success');
           this.spinner.stopSpinner();
           /* SE REDIRIGE AL USUARIO A LA VENTANA PRINCIPAL*/
+          localStorage.setItem('correo', email)
           location.pathname = '/home';
         }).catch(() => {
           Swal.fire('Credenciales incorrectas', `<strong>
@@ -66,6 +67,7 @@ export class LoginComponent implements OnInit {
           Logeado exitosamente
           </strong>`, 'success');
           this.spinner.stopSpinner();
+          
           location.pathname = '/home';
     }).catch((error) => {
       Swal.fire('Credenciales incorrectas', `<strong>

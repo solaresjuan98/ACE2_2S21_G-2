@@ -3,6 +3,7 @@ import { ChartDataSets, ChartOptions, ChartType } from 'chart.js';
 import { BaseChartDirective, Color, Label } from 'ng2-charts';
 import { toArray } from 'rxjs/operators';
 import { ReportesService } from 'src/app/services/reportes.service';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-registro-peso',
@@ -11,6 +12,10 @@ import { ReportesService } from 'src/app/services/reportes.service';
   ]
 })
 export class RegistroPesoComponent implements OnInit {
+
+  correo = '';
+  id_usuario = 0;
+
 
   public lineChartData: ChartDataSets[] = [
     { data: [/*65, 59, 80, 81, 56, 55, 40*/], label: 'Peso (En kg)' }
@@ -93,20 +98,29 @@ export class RegistroPesoComponent implements OnInit {
 
   @ViewChild(BaseChartDirective, { static: true }) chart: BaseChartDirective;
 
-  constructor(private reportesService: ReportesService) { }
+  constructor(private userService: UserService, private reportesService: ReportesService) { }
 
   ngOnInit(): void {
 
-    // Consumir servicio
-    this.reportesService.getHistorialPeso()
-      .subscribe(({ labels, values }) => {
+    this.correo = localStorage.getItem("correo");
+    
+    // Obtener id_usuario
+    this.userService.getIdUsuario(this.correo).subscribe(data => {
+      this.id_usuario = data[0].id_usuario;
+      console.log(this.id_usuario)
 
-        this.lineChartLabels = labels;
-        this.lineChartData[0].data = values;
+      // Consumir servicio
+      this.reportesService.getHistorialPeso(this.id_usuario)
+        .subscribe(({ labels, values }) => {
 
-        this.lineChartLabels[this.lineChartLabels.length] = '';
-        this.lineChartData[0].data[this.lineChartData[0].data.length] = 0;
-      })
+          this.lineChartLabels = labels;
+          this.lineChartData[0].data = values;
+
+          this.lineChartLabels[this.lineChartLabels.length] = '';
+          this.lineChartData[0].data[this.lineChartData[0].data.length] = 0;
+        })
+
+    });
 
   }
 

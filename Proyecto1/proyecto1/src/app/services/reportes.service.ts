@@ -20,11 +20,10 @@ export class ReportesService {
 
   }
 
-  
 
   // Enviar parametro (codigo de usuario)
-  getHistorialUso() {
-    return this.http.get("http://localhost:3000/historialUso/usuario/1")
+  getHistorialUso(id_usuario: number) {
+    return this.http.get(`http://localhost:3000/historialUso/usuario/${id_usuario}`)
       .pipe(
         map(data => {
           const labels = Object.keys(data);
@@ -35,8 +34,8 @@ export class ReportesService {
       )
   }
 
-  getHistorialPeso(){
-    return this.http.get("http://localhost:3000/historialPeso/usuario/1")
+  getHistorialPeso(id_usuario: number) {
+    return this.http.get(`http://localhost:3000/historialPeso/usuario/${id_usuario}`)
       .pipe(
         map(data => {
           const labels = Object.keys(data);
@@ -47,8 +46,8 @@ export class ReportesService {
       )
   }
 
-  getDiasdeMasUso(){
-    return this.http.get("http://localhost:3000/maxHorasSeguidas/usuario/1")
+  getDiasdeMasUso(id_usuario: number) {
+    return this.http.get(`http://localhost:3000/maxHorasSeguidas/usuario/${id_usuario}`)
       .pipe(
         map(data => {
           const labels = Object.keys(data);
@@ -62,18 +61,18 @@ export class ReportesService {
   }
 
 
-  getDiasdeMenosUso() {
-    return this.http.get("http://localhost:3000/diasMenorUso/usuario/1")
-    .pipe(
-      map(data => {
-        const labels = Object.keys(data);
-        const values = Object.values(data);
+  getDiasdeMenosUso(id_usuario: number) {
+    return this.http.get(`http://localhost:3000/diasMenorUso/usuario/${id_usuario}`)
+      .pipe(
+        map(data => {
+          const labels = Object.keys(data);
+          const values = Object.values(data);
 
-        //console.log(labels, values);
-        return { labels, values };
+          //console.log(labels, values);
+          return { labels, values };
 
-      })
-    )
+        })
+      )
   }
 
 }

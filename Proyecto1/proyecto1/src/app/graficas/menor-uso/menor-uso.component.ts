@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ChartDataSets, ChartOptions, ChartType } from 'chart.js';
 import { Color, Label } from 'ng2-charts';
 import { ReportesService } from 'src/app/services/reportes.service';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-menor-uso',
@@ -15,6 +16,10 @@ import { ReportesService } from 'src/app/services/reportes.service';
   ]
 })
 export class MenorUsoComponent implements OnInit {
+
+  // Datos del usuario
+  correo = '';
+  id_usuario = 0;
 
   public barChartOptions: ChartOptions = {
     responsive: true,
@@ -48,29 +53,39 @@ export class MenorUsoComponent implements OnInit {
       ]
     }
   ]
-  constructor(private reportesService: ReportesService) { }
+  constructor(private reportesService: ReportesService, private userService: UserService) { }
 
   ngOnInit(): void {
 
-    this.reportesService.getDiasdeMenosUso()
-    .subscribe(({ labels, values }) => {
-      
-      // Formatear las fechas
-      for (let i = 0; i < labels.length; i++) {
-        let date = new Date(labels[i]);
-        let currentMonth = date.getMonth()+1;
+    this.correo = localStorage.getItem("correo");
 
-        this.barChartLabels.push(date.getDate()+"/"+currentMonth+"/"+date.getFullYear())
-      }
+    // Obtener id_usuario
+    this.userService.getIdUsuario(this.correo).subscribe(data => {
+      this.id_usuario = data[0].id_usuario;
+      console.log(this.id_usuario)
 
-      //this.barChartLabels = labels;
-      this.barChartData[0].data = values;
+      this.reportesService.getDiasdeMenosUso(this.id_usuario)
+        .subscribe(({ labels, values }) => {
 
-      this.barChartLabels[this.barChartLabels.length] = '';
-      this.barChartData[0].data[this.barChartData[0].data.length] = 0;
+          // Formatear las fechas
+          for (let i = 0; i < labels.length; i++) {
+            let date = new Date(labels[i]);
+            let currentMonth = date.getMonth() + 1;
+
+            this.barChartLabels.push(date.getDate() + "/" + currentMonth + "/" + date.getFullYear())
+          }
+
+          //this.barChartLabels = labels;
+          this.barChartData[0].data = values;
+
+          this.barChartLabels[this.barChartLabels.length] = '';
+          this.barChartData[0].data[this.barChartData[0].data.length] = 0;
 
 
-    })
+        })
+    });
+
+
 
   }
 

@@ -4,6 +4,7 @@ import * as globales from '../../../globales';
 import { Router } from '@angular/router';
 import { SillaService } from 'src/app/services/silla.service';
 import Swal from 'sweetalert2'
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-silla',
@@ -12,22 +13,31 @@ import Swal from 'sweetalert2'
 })
 export class SillaComponent implements OnInit {
 
+  correo = '';
+  id_usuario: number = 0;
   url: string = `http://${globales.ip}:${globales.port}`;
 
-  constructor(private httpClient: HttpClient, private router: Router, private sillaService: SillaService) { }
+
+  constructor(private userService: UserService, private sillaService: SillaService) { }
 
   ngOnInit(): void {
+    this.correo = localStorage.getItem("correo");
+
+    // Obtener id_usuario
+    this.userService.getIdUsuario(this.correo).subscribe(data => {
+      this.id_usuario = data[0].id_usuario;
+    });
   }
 
   registrarSilla() {
 
     // **OBTENER EL ID DEL USUARIO**
-    let id_usuario = 1; // OBTENER ID
+
     var nombre_silla = ((document.getElementById("nombresilla") as HTMLInputElement).value);
     var ubicacion_silla = ((document.getElementById("ubicacion") as HTMLInputElement).value);
     if (ubicacion_silla != "") {
-
-      this.sillaService.registrarSilla({ nombre_silla, ubicacion_silla, id_usuario }).toPromise()
+  
+      this.sillaService.registrarSilla(nombre_silla, ubicacion_silla, this.id_usuario).toPromise()
         .then(() => {
 
           Swal.fire(
