@@ -14,17 +14,18 @@ import {
     indexWelcome,
     getTest,
     insertData,
-    getTiempoTotal,
     getVecesPromedio,
     getTiempoPromedio,
     getUltimoRegistro,
     getHistorialUso,
-    insertUsuario
+    insertUsuario,
+    getHistorialPeso,
+    getDiasMayorUso
 } from '../controllers/index.controllers'
 
 router.route('/').get(getTest);
 // Historial de peso de uso del usuario
-router.route('/historialPeso/usuario/:id_usuario').get(getTiempoTotal);
+router.route('/historialPeso/usuario/:id_usuario').get(getHistorialPeso);
 // Numero de veces promedio que se levanta el usuario
 router.route('/vecesPromedio/usuario/:id_usuario').get(getVecesPromedio);
 // Numero de horas promedio que utiliza el usuario la silla
@@ -33,18 +34,14 @@ router.route('/horasPromedio/usuario/:id_usuario').get(getTiempoPromedio);
 router.route('/ultimoRegistro/usuario/:id_usuario').get(getUltimoRegistro);
 // Histrial de uso del usuario
 router.route('/historialUso/usuario/:id_usuario').get(getHistorialUso);
+// Dias de mayor uso de la silla por día
+router.route('/diasMayorUso/usuario/:id_usuario').get(getDiasMayorUso);
 
 router.route('/usuario').post(insertUsuario);
 // Conexión Arduino
 port.on("open", () => {
 
-    // prueba
-    /*const objTest = {
-        id_usuario: Math.floor(Math.random() * (100 - 10) + 10),
-        nombre: "Mario",
-        profesion: "Arquitecto"
-    }
-    insertData(objTest);*/
+
     console.log("se abrió la comunicación :v")
 })
 //Variables Globales
