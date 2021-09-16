@@ -1,5 +1,6 @@
 import { Request, Response } from 'express'
 import { connect } from '../database'
+import { Silla } from '../interface/Silla';
 import { Usuario } from '../interface/Usuario';
 
 
@@ -95,7 +96,7 @@ export async function getVecesPromedio(req: Request, res: Response): Promise<Res
     //return res.json(JSON.parse(arr));
 
     return res.json({
-        veces_promedio: Math.round(vecesPromedio / arregloParseado.length)
+        veces_promedio: Math.round(vecesPromedio / arregloParseado.length) // se redondea al valor exacto mas cercano
     })
 
 }
@@ -168,9 +169,41 @@ export async function getHistorialUso(req: Request, res: Response): Promise<Resp
 }
 
 
-// ==== Obtener el dia y el numero de horas (solo falta agrupar por semanas en un where)
-export async function getDiasMayorUso(req:Request, res: Response): Promise<Response> {
-    
+// ==== Obtener el dia y el numero de horas [mayor a menor]
+export async function getDiasMayorUso(req: Request, res: Response): Promise<Response> {
+
+    let grafica: any = {
+        datos: {}
+    }
+
+    const id = req.params.id_usuario;
+
+    const connection = await connect();
+    const arrRespuesta = await connection.query("select date(fecha_registro) as fecha, SUM(timestampdiff(second, hora_inicio, hora_final) / 3600) as horas from registro \
+        join silla s on s.id_silla = registro.id_silla \
+        join usuario u on u.id_usuario = s.id_usuario \
+    where  u.id_usuario = ? \
+    group by fecha order by horas desc", [id]);
+
+    const arr = JSON.stringify(arrRespuesta[0]);
+    const arregloParseado: any[] = JSON.parse(arr);
+
+    for (let i = 0; i < arregloParseado.length; i++) {
+        const element = arregloParseado[i];
+        //console.log(element.fecha);
+        //console.log(element.horas);
+
+        let nombreObj = element.fecha;
+        grafica.datos[nombreObj] = element.horas;
+
+    }
+
+    return res.json(grafica.datos);
+
+}
+
+// ==== Obtener el dia y el numero de horas [mayor a menor]
+export async function getDiasMenorUso(req: Request, res: Response): Promise<Response> {
     let grafica: any = {
         datos: {}
     }
@@ -198,16 +231,51 @@ export async function getDiasMayorUso(req:Request, res: Response): Promise<Respo
     }
 
     return res.json(grafica.datos);
+}
+
+// ====  Obtener maximo registro de horas seguidas por dia
+export async function getMaximoHorasSeguidas(req: Request, res: Response): Promise<Response> {
+
+    let grafica: any = {
+        datos: {}
+    }
+
+    const id = req.params.id_usuario;
+
+    const connection = await connect();
+    const arrRespuesta = await connection.query("select fecha_registro, \
+            max(timestampdiff(second, registro.hora_inicio, registro.hora_final) / 3600) as max_horas_seguidas \
+        from registro \
+            join silla s on s.id_silla = registro.id_silla \
+            join usuario u on u.id_usuario = s.id_usuario \
+        where u.id_usuario = ? \
+        group by fecha_registro order by fecha_registro", [id]);
+
+    const arr = JSON.stringify(arrRespuesta[0]);
+    const arregloParseado: any[] = JSON.parse(arr);
+
+    for (let i = 0; i < arregloParseado.length; i++) {
+        const element = arregloParseado[i];
+        //console.log(element.fecha);
+        //console.log(element.horas);
+
+        let nombreObj = element.fecha_registro;
+        grafica.datos[nombreObj] = element.max_horas_seguidas;
+
+    }
+    console.log(grafica);
+    return res.json(grafica.datos);
+
 
 }
 
 
-
+// ==== INSERTAR USUARIO NUEVO
 export async function insertUsuario(req: Request, res: Response) {
 
     const nuevoUsuario: Usuario = req.body;
     const connection = await connect();
-    console.log(nuevoUsuario);
+    //console.log(nuevoUsuario);
     //await connection.query(`insert into usuario values('${req.body.correo}','${req.body.password}');`); 
     await connection.query(`INSERT INTO usuario (correo_usuario, contrasenia) 
         VALUES('${nuevoUsuario.email}','${nuevoUsuario.password}')`);
@@ -215,18 +283,19 @@ export async function insertUsuario(req: Request, res: Response) {
         message: 'Usuario creado'
     });
 
-    // try {
-
-
-    // } catch (error) {
-    //     res.sendStatus(400);
-    // }
 }
 
+export async function registrarSilla(req: Request, res: Response) {
 
-//
-function generarJSON(resultadoColumna: any[]) {
+    const nuevaSilla: Silla = req.body;
+    const connection = await connect();
 
+    await connection.query(`INSERT INTO silla (nombre_silla, ubicacion_silla, id_usuario)
+            VALUES( '${nuevaSilla.nombre_silla}', '${nuevaSilla.ubicacion_silla}', ${nuevaSilla.id_usuario} )`)
+
+    res.json({
+        message: 'Silla registrada'
+    })
 
 
 }

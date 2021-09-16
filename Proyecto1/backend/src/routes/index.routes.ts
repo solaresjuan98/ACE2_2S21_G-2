@@ -20,7 +20,10 @@ import {
     getHistorialUso,
     insertUsuario,
     getHistorialPeso,
-    getDiasMayorUso
+    getDiasMayorUso,
+    getDiasMenorUso,
+    registrarSilla,
+    getMaximoHorasSeguidas
 } from '../controllers/index.controllers'
 
 router.route('/').get(getTest);
@@ -36,7 +39,14 @@ router.route('/ultimoRegistro/usuario/:id_usuario').get(getUltimoRegistro);
 router.route('/historialUso/usuario/:id_usuario').get(getHistorialUso);
 // Dias de mayor uso de la silla por día
 router.route('/diasMayorUso/usuario/:id_usuario').get(getDiasMayorUso);
+// Dias de mayor uso de la silla por día
+router.route('/diasMenorUso/usuario/:id_usuario').get(getDiasMenorUso);
+// Obtener el maximo de horas seguidas que se hizo uso de la silla por día
+router.route('/maxHorasSeguidas/usuario/:id_usuario').get(getMaximoHorasSeguidas);
 
+// Insertar silla
+router.route('/registrarSilla').post(registrarSilla);
+// Registrar usuario
 router.route('/usuario').post(insertUsuario);
 // Conexión Arduino
 port.on("open", () => {
