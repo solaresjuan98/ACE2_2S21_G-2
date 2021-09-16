@@ -6,27 +6,25 @@
     <div class="card mt-5 alcentro" style="width: 90vw; border-radius: 5px;">
         <h5 class="mt-5 mb-2">¿Cuál silla estás utilizando?</h5>
         <form class="mb-3">
-            <select class="form-select mr-5" style="width: 10rem;" id="ubicacion">
+            <select class="form-select mr-5" style="width: 10rem;" id="ubicacion" *ngFor="let item of datos">
                 <option selected>--Ubicación--</option>
-                <option value="1">One</option>
-                <option value="2">Two</option>
-                <option value="3">Three</option>
+                <option value="{{item.num}}">{{item.ubi}}</option>
             </select>
-            <button class="btn btn-dark" style="width: 10rem;">Aceptar</button>
+            <button class="btn btn-dark" style="width: 10rem;" (click)="aceptar()">Aceptar</button>
         </form>
 
         <div class="row mb-5">
 
             <div class="col" style="text-align: center; vertical-align: middle;">
-                <h4>Has usado esta silla por <h2 style="color:goldenrod;">{{ 150 }}</h2>horas</h4>
+                <h4>Has usado esta silla por <h2 style="color:goldenrod;">{{ usototal }}</h2>horas</h4>
             </div>
 
             <div class="col" style="text-align: center; vertical-align: middle;">
-                <h4>Hoy te has levantado <h2 style="color: goldenrod;">{{ 3 }}</h2>veces</h4>
+                <h4>Hoy te has levantado <h2 style="color: goldenrod;">{{ levantadas }}</h2>veces</h4>
             </div>
 
             <div class="col" style="text-align: center; vertical-align: middle;">
-                <h4>En promedio usas esta silla <h2 style="color: goldenrod;">{{ 8 }}</h2>horas al día</h4>
+                <h4>En promedio usas esta silla <h2 style="color: goldenrod;">{{ usopromedio }}</h2>horas al día</h4>
             </div>
         </div>
 
@@ -34,11 +32,11 @@
         <h3 class="mb-5">Uso en tiempo Real:</h3>
         <div class="mb-3 alcentro">
             <h4>Hora de inicio: </h4>
-            <h3 style="color: goldenrod;">{{"15:30"}}</h3>
+            <h3 style="color: goldenrod;">{{ horainicio }}</h3>
         </div>
         <div class="mb-5 alcentro">
             <h4>Tiempo Sentado: </h4>
-            <h3 style="color: goldenrod;">{{"00:30:15"}}</h3>
+            <h3 style="color: goldenrod;">{{ tiempo }}</h3>
         </div>
     </div>
 </div>
