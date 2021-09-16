@@ -10,8 +10,10 @@ export class UserService {
     constructor(private http:HttpClient) { }
 
     register({email, password}){
-      //return this.http.post("http://localhost:3000/usuario", {email, password});
-      return this.http.post(`${environment.API_URI}/usuario`, 
-      {email, password});
+      return this.http.post("http://localhost:3000/usuario", {email, password});
+      //return this.http.post(`${environment.API_URI}/usuario`, 
+      //{email, password});
     }
 }
+
+
