@@ -20,6 +20,7 @@ export class MenorUsoComponent implements OnInit {
   // Datos del usuario
   correo = '';
   id_usuario = 0;
+  horas_promedio = 0;
 
   public barChartOptions: ChartOptions = {
     responsive: true,
@@ -63,6 +64,12 @@ export class MenorUsoComponent implements OnInit {
     this.userService.getIdUsuario(this.correo).subscribe(data => {
       this.id_usuario = data[0].id_usuario;
       console.log(this.id_usuario)
+
+      this.reportesService.getHorasPromediodeUso(this.id_usuario).subscribe(data =>{
+
+        this.horas_promedio =data[0].horas_promedio;
+        
+      })
 
       this.reportesService.getDiasdeMenosUso(this.id_usuario)
         .subscribe(({ labels, values }) => {

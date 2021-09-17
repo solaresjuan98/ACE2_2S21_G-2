@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { UserService } from 'src/app/services/user.service';
 import { SillaService } from 'src/app/services/silla.service';
 import { SillaUsuario } from '../../../interfaces/Interfaces';
+import { ReportesService } from 'src/app/services/reportes.service';
 
 @Component({
   selector: 'app-home',
@@ -17,15 +18,15 @@ export class HomeComponent implements OnInit {
   correo = '';
   id_usuario = 0;
   url: string = `http://${globales.ip}:${globales.port}`;
-  datos:SillaUsuario[] = []
+  datos: SillaUsuario[] = []
   cont = 1
-  usototal = 0
+  horas_uso_total = 0
   levantadas = 0
-  usopromedio = 0
+  horas_uso_promedio = 0
   horainicio = 0
   tiempo = 0
 
-  constructor(private userService: UserService, private sillaService: SillaService) { }
+  constructor(private userService: UserService, private sillaService: SillaService, private reportesService: ReportesService) { }
 
 
   ngOnInit(): void {
@@ -48,6 +49,17 @@ export class HomeComponent implements OnInit {
       this.sillaService.obtenerSillasporId(this.id_usuario).subscribe(data => {
         this.datos = data;
       })
+
+      // Obtener total de horas sentado
+      this.reportesService.getTotalHoras(this.id_usuario).subscribe(data => {
+        this.horas_uso_total = parseFloat(data[0].total_horas);
+      })
+
+      // OBtener total de horas promedio que el usuario se sienta
+      this.reportesService.getHorasPromediodeUso(this.id_usuario).subscribe(data => {
+        this.horas_uso_promedio = parseFloat(data[0].horas_promedio);
+      })
+
     });
 
 

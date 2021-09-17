@@ -75,4 +75,28 @@ export class ReportesService {
       )
   }
 
+  getTotalHoras(id_usuario: number) {
+
+    return this.http.get(`http://localhost:3000/totalHoras/usuario/${id_usuario}`)
+      .pipe(
+        map(data => {
+          return data;
+        })
+      )
+
+  }
+
+  getHorasPromediodeUso(id_usuario: number) {
+
+    return this.http.get(`http://localhost:3000/horasPromedio/usuario/${id_usuario}`)
+      .pipe(
+        map(data => {
+
+          return data;
+
+        })
+      )
+
+  }
+
 }
