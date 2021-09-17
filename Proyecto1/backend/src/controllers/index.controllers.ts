@@ -202,6 +202,46 @@ export async function getDiasMayorUso(req: Request, res: Response): Promise<Resp
 
 }
 
+// ==== Obtener la media de horas que se sienta el usuario
+export async function getHorasPromedio(req: Request, res: Response): Promise<Response> {
+
+    const id = req.params.id_usuario;
+    const connection = await connect();
+    const arrRespuesta = await connection.query("select round(sum(horas) / count(*), 3) as horas_promedio \
+    from ( \
+             select fecha_registro as fecha, SUM(timestampdiff(second, hora_inicio, hora_final) / 3600) as horas \
+             from registro \
+                      join silla s on s.id_silla = registro.id_silla \
+                      join usuario u on u.id_usuario = s.id_usuario \
+             where u.id_usuario = ? \
+             group by fecha) t1", [id]);
+
+    return res.json(arrRespuesta[0]);
+
+}
+
+// ==== Obtener el total de horas que ha pasado sentado el usuario
+export async function getTotalHoras(req: Request, res: Response): Promise<Response> {
+
+    const id = req.params.id_usuario;
+    const connection = await connect();
+    const arrRespuesta = await connection.query(`
+    select sum(t1.horas) as total_horas
+    from (
+            select fecha_registro as fecha, SUM(timestampdiff(second, hora_inicio, hora_final) / 3600) as horas
+            from registro
+                    join silla s on s.id_silla = registro.id_silla
+                    join usuario u on u.id_usuario = s.id_usuario
+            where u.id_usuario = ${id}
+            group by fecha
+        ) t1
+    `)
+
+    return res.json(arrRespuesta[0]);
+
+}
+
+
 // ==== Obtener el dia y el numero de horas [mayor a menor]
 export async function getDiasMenorUso(req: Request, res: Response): Promise<Response> {
     let grafica: any = {
@@ -211,11 +251,42 @@ export async function getDiasMenorUso(req: Request, res: Response): Promise<Resp
     const id = req.params.id_usuario;
 
     const connection = await connect();
-    const arrRespuesta = await connection.query("select date(fecha_registro) as fecha, SUM(timestampdiff(second, hora_inicio, hora_final) / 3600) as horas from registro \
-        join silla s on s.id_silla = registro.id_silla \
-        join usuario u on u.id_usuario = s.id_usuario \
-    where  u.id_usuario = ? \
-    group by fecha order by horas", [id]);
+    const arrRespuesta = await connection.query(`
+    select fecha_registro as fecha, SUM(timestampdiff(second, hora_inicio, hora_final) / 3600) as horas
+    from registro
+             join silla s on s.id_silla = registro.id_silla
+             join usuario u on u.id_usuario = s.id_usuario
+    where u.id_usuario = ${id}
+    group by fecha_registro
+    having horas <= (
+        select round(sum(horas) / count(*), 3) as horas_promedio
+        from (
+                 select fecha_registro as fecha, SUM(timestampdiff(second, hora_inicio, hora_final) / 3600) as horas
+                 from registro
+                          join silla s on s.id_silla = registro.id_silla
+                          join usuario u on u.id_usuario = s.id_usuario
+                 where u.id_usuario = ${id}
+                 group by fecha) t1
+    )
+    order by horas desc
+    `)
+    // const arrRespuesta = await connection.query("select fecha_registro as fecha, SUM(timestampdiff(second, hora_inicio, hora_final) / 3600) as horas \n \
+    // from registro \n \
+    //         join silla s on s.id_silla = registro.id_silla \n \
+    //         join usuario u on u.id_usuario = s.id_usuario \n \
+    // where u.id_usuario = ? \n \
+    // group by fecha_registro \n \
+    // having horas <= ( \n \
+    //     select round(sum(horas) / count(*), 3) as horas_promedio \n \
+    //     from ( \n \
+    //             select fecha_registro as fecha, SUM(timestampdiff(second, hora_inicio, hora_final) / 3600) as horas \n \
+    //             from registro \n \
+    //                     join silla s on s.id_silla = registro.id_silla \n \
+    //                     join usuario u on u.id_usuario = s.id_usuario \n \
+    //             where u.id_usuario = ? \n \
+    //             group by fecha) t1 \n \
+    // ) \n \
+    // order by horas desc", [id])
 
     const arr = JSON.stringify(arrRespuesta[0]);
     const arregloParseado: any[] = JSON.parse(arr);
@@ -232,6 +303,7 @@ export async function getDiasMenorUso(req: Request, res: Response): Promise<Resp
 
     return res.json(grafica.datos);
 }
+
 
 // ====  Obtener maximo registro de horas seguidas por dia
 export async function getMaximoHorasSeguidas(req: Request, res: Response): Promise<Response> {
@@ -269,8 +341,25 @@ export async function getMaximoHorasSeguidas(req: Request, res: Response): Promi
 
 }
 
-export async function getIdUsuario(req:Request, res: Response) {
-    
+// Veces que el usuario se ha levantado durante el dia actual
+export async function getVecesLevantado(req: Request, res: Response): Promise<Response> {
+
+    const id = req.params.id_usuario;
+    const connection = await connect();
+    const arrResponse = await connection.query("select count(*) as veces_levantado_hoy \
+        from registro \
+                join silla s on registro.id_silla = s.id_silla \
+                join usuario u on u.id_usuario = s.id_usuario \
+        where u.id_usuario = ? \
+        and date(fecha_registro) = date(now())", [id]);
+
+    return res.json(arrResponse[0]);
+
+}
+
+
+export async function getIdUsuario(req: Request, res: Response) {
+
     const correo = req.params.correo_electronico;
     const connection = await connect();
 
@@ -285,8 +374,8 @@ export async function getIdUsuario(req:Request, res: Response) {
 }
 
 // ==== Obtener sillas del usuario
-export async function getSillasUsuario(req:Request, res: Response) {
-    
+export async function getSillasUsuario(req: Request, res: Response) {
+
     const id = req.params.id_usuario;
     const connection = await connect();
 
@@ -295,8 +384,8 @@ export async function getSillasUsuario(req:Request, res: Response) {
         where id_usuario = ?', [id])
 
 
-        const arr = JSON.stringify(resp[0]);
-        const arregloParseado: any[] = JSON.parse(arr);
+    const arr = JSON.stringify(resp[0]);
+    const arregloParseado: any[] = JSON.parse(arr);
 
     return res.json(arregloParseado)
 

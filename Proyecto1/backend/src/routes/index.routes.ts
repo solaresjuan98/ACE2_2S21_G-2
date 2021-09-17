@@ -25,7 +25,10 @@ import {
     registrarSilla,
     getMaximoHorasSeguidas,
     getIdUsuario,
-    getSillasUsuario
+    getSillasUsuario,
+    getHorasPromedio,
+    getTotalHoras,
+    getVecesLevantado
 } from '../controllers/index.controllers'
 
 router.route('/').get(getTest);
@@ -37,15 +40,22 @@ router.route('/historialPeso/usuario/:id_usuario').get(getHistorialPeso);
 // Numero de veces promedio que se levanta el usuario
 router.route('/vecesPromedio/usuario/:id_usuario').get(getVecesPromedio);
 // Numero de horas promedio que utiliza el usuario la silla
-router.route('/horasPromedio/usuario/:id_usuario').get(getTiempoPromedio);
+//router.route('/horasPromedio/usuario/:id_usuario').get(getTiempoPromedio);
 // Ultimo registro
 router.route('/ultimoRegistro/usuario/:id_usuario').get(getUltimoRegistro);
+// Obtener horas promedio que el usuario pasa sentado
+router.route('/horasPromedio/usuario/:id_usuario').get(getHorasPromedio);
+// Obtener el total de horas que ha pasado sentado el usuario
+router.route('/totalHoras/usuario/:id_usuario').get(getTotalHoras);
 // Histrial de uso del usuario
 router.route('/historialUso/usuario/:id_usuario').get(getHistorialUso);
 // Dias de mayor uso de la silla por día
 router.route('/diasMayorUso/usuario/:id_usuario').get(getDiasMayorUso);
 // Dias de mayor uso de la silla por día
 router.route('/diasMenorUso/usuario/:id_usuario').get(getDiasMenorUso);
+// Veces que el usuario se ha levantado durante el dia actual
+router.route('/vecesLevantado/usuario/:id_usuario').get(getVecesLevantado);
+
 // Obtener el maximo de horas seguidas que se hizo uso de la silla por día
 router.route('/maxHorasSeguidas/usuario/:id_usuario').get(getMaximoHorasSeguidas);
 
