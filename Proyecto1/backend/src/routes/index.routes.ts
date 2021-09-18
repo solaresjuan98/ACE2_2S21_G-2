@@ -15,7 +15,6 @@ import {
     getTest,
     insertData,
     getVecesPromedio,
-    getTiempoPromedio,
     getUltimoRegistro,
     getHistorialUso,
 
@@ -42,8 +41,7 @@ router.route('/usuario/:correo_electronico').get(getIdUsuario);
 router.route('/historialPeso/usuario/:id_usuario').get(getHistorialPeso);
 // Numero de veces promedio que se levanta el usuario
 router.route('/vecesPromedio/usuario/:id_usuario').get(getVecesPromedio);
-// Numero de horas promedio que utiliza el usuario la silla
-router.route('/horasPromedio/usuario/:id_usuario').get(getTiempoPromedio);
+
 // Ultimo registro
 router.route('/ultimoRegistro/usuario/:id_usuario').get(getUltimoRegistro);
 // Obtener horas promedio que el usuario pasa sentado
