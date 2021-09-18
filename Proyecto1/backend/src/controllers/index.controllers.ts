@@ -17,20 +17,7 @@ export async function getTest(req: Request, res: Response): Promise<Response> {
     return res.json(info[0]);
 }
 
-export async function getCruda(req: Request, res: Response): Promise<Response>{
-    const SerialPort = require('serialport');
-    const ReadLine = require('@serialport/parser-readline')
-    const port = new SerialPort("COM3", { baudRate: 9600 });
-    const parser = port.pipe(new ReadLine({ delimiter: "\n" }));
-    let json
-    parser.on("data", (data: any) => {
-        json=JSON.parse(data)
-        console.log(json)
-        
-    })
-    
-    return res.json('HOLA MUNDO')
-}
+
 
 
 export async function insertData(fecha_registro: any, hora_inicio: any, hora_final: any, peso: any, silla: any) {
@@ -117,6 +104,7 @@ export async function getVecesPromedio(req: Request, res: Response): Promise<Res
 
 }
 
+
 // ====  Tiempo de uso promedio de la silla por día ====
 export async function getTiempoPromedio(req: Request, res: Response): Promise<Response> {
 
@@ -165,6 +153,7 @@ export async function getUltimoRegistro(req: Request, res: Response): Promise<Re
     return res.json(arrRespuesta[0]);
 }
 
+
 // ==== Historial del tiempo de uso de la silla
 export async function getHistorialUso(req: Request, res: Response): Promise<Response> {
 
@@ -181,6 +170,7 @@ export async function getHistorialUso(req: Request, res: Response): Promise<Resp
 
     return res.json(arrRespuesta[0]);
 }
+
 
 // ==== Obtener el dia y el numero de horas [mayor a menor]
 export async function getDiasMayorUso(req: Request, res: Response): Promise<Response> {
@@ -334,7 +324,7 @@ export async function getMaximoHorasSeguidas(req: Request, res: Response): Promi
             join silla s on s.id_silla = registro.id_silla \
             join usuario u on u.id_usuario = s.id_usuario \
         where u.id_usuario = ? \
-        group by fecha_registro order by max_horas_seguidas desc", [id]);
+        group by fecha_registro order by fecha_registro", [id]);
 
     const arr = JSON.stringify(arrRespuesta[0]);
     const arregloParseado: any[] = JSON.parse(arr);
@@ -354,7 +344,7 @@ export async function getMaximoHorasSeguidas(req: Request, res: Response): Promi
 
 }
 
-// ==== Veces que el usuario se ha levantado durante el dia actual
+// Veces que el usuario se ha levantado durante el dia actual
 export async function getVecesLevantado(req: Request, res: Response): Promise<Response> {
 
     const id = req.params.id_usuario;
@@ -367,40 +357,6 @@ export async function getVecesLevantado(req: Request, res: Response): Promise<Re
         and date(fecha_registro) = date(now())", [id]);
 
     return res.json(arrResponse[0]);
-
-}
-
-// ==== Obtener horario de uso del usuario
-export async function getHorarioUso(req:Request, res: Response): Promise<Response> {
-    
-    let grafica: any = {
-        datos: {}
-    }
-
-    const id = req.params.id_usuario;
-    const connection = await connect();
-    const arrResponse = await connection.query("select concat(hour(registro.hora_inicio), ':', '00 hrs') hora, count(hour(registro.hora_inicio)) veces_utilizado \
-        from registro \
-            join silla s on s.id_silla = registro.id_silla \
-            join usuario u on u.id_usuario = s.id_usuario \
-        where u.id_usuario = ? \
-        group by hora order by hora", [id]);
-
-    const arr = JSON.stringify(arrResponse[0]);
-    const arregloParseado: any[] = JSON.parse(arr);
-
-    for (let i = 0; i < arregloParseado.length; i++) {
-        const element = arregloParseado[i];
-        //console.log(element.fecha);
-        //console.log(element.horas);
-
-        let nombreObj = element.hora;
-        grafica.datos[nombreObj] = element.veces_utilizado;
-
-    }
-
-    return res.json(grafica.datos)
-
 
 }
 
@@ -465,6 +421,40 @@ export async function registrarSilla(req: Request, res: Response) {
     res.json({
         message: 'Silla registrada'
     })
+
+
+}
+
+
+export async function getHorarioUso(req:Request, res: Response): Promise<Response> {
+    
+    let grafica: any = {
+        datos: {}
+    }
+
+    const id = req.params.id_usuario;
+    const connection = await connect();
+    const arrResponse = await connection.query("select concat(hour(registro.hora_inicio), ':', '00 hrs') hora, count(hour(registro.hora_inicio)) veces_utilizado \
+        from registro \
+            join silla s on s.id_silla = registro.id_silla \
+            join usuario u on u.id_usuario = s.id_usuario \
+        where u.id_usuario = ? \
+        group by hora order by hora", [id]);
+
+    const arr = JSON.stringify(arrResponse[0]);
+    const arregloParseado: any[] = JSON.parse(arr);
+
+    for (let i = 0; i < arregloParseado.length; i++) {
+        const element = arregloParseado[i];
+        //console.log(element.fecha);
+        //console.log(element.horas);
+
+        let nombreObj = element.hora;
+        grafica.datos[nombreObj] = element.veces_utilizado;
+
+    }
+
+    return res.json(grafica.datos)
 
 
 }

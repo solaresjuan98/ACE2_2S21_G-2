@@ -55,6 +55,7 @@ export class ReportesService {
         })
       )
   }
+  
 
 
   getDiasdeMenosUso(id_usuario: number) {
@@ -101,6 +102,16 @@ export class ReportesService {
         })
       )
 
+  }
+
+  getInfoCruda() {
+    return this.http.get(`http://localhost:3000/getInformacionCruda`)
+      .pipe(
+        map(data => {
+         
+          return data
+        })
+      )
   }
 
 }

@@ -18,8 +18,8 @@ import {
     getTiempoPromedio,
     getUltimoRegistro,
     getHistorialUso,
-    
-    
+
+
     insertUsuario,
     getHistorialPeso,
     getDiasMayorUso,
@@ -79,16 +79,29 @@ port.on("open", () => {
     console.log("se abrió la comunicación :v")
 })
 //router.route('/getInformacionCruda').get(parser.on("data", (data: any) => {}));
-let dato="";
+let dato = ""
 router.get('/getInformacionCruda', (req, res) => {
     res.send(`
-    <h1>${ dato }</h1>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+
+    <center><a href="http://localhost:4200/home/" class="btn btn-primary text-light" >Regresar</a></center>
+    <br>
+   <center>
+   <table class="table">
+    <center>${dato}</center>
+    </table>
+   </center>
+    
+  
     <script type="text/javascript">
 function actualizar(){location.reload(true);}
-//Función para actualizar cada 5 segundos(5000 milisegundos)
-setInterval("actualizar()",3000);
+//Función para actualizar cada 5 segundos(3000 milisegundos)
+setInterval("actualizar()",1000);
 </script>
-`)}
+`)
+
+}
+
 );
 //Variables Globales
 var bandera1 = true
@@ -112,10 +125,10 @@ function Promedio(s: any) {
 parser.on("data", (data: any) => {
 
     let json = JSON.parse(data);
-    dato+=data
+    dato += "<tr ><td class='table-light'>"+data+"</td></tr>"
     //response.write(process.version);
-   // console.log(data)
-   
+    // console.log(data)
+
     if (json.sentado && json.pesoEnKg > 0.15) {
         console.log("Peso: " + json.pesoEnKg + " Kg");
         pesos.unshift(json.pesoEnKg);

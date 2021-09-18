@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ReportesService } from 'src/app/services/reportes.service';
 
 @Component({
   selector: 'app-tiemporeal',
@@ -7,9 +8,31 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TiemporealComponent implements OnInit {
 
-  constructor() { }
+  constructor(private reportesService: ReportesService) { }
 
   ngOnInit(): void {
+    /*
+    this.reportesService.getInfoCruda().subscribe((res:any)=>{
+      console.log(res)
+    },(err)=>{
+      
+      console.log(err)
+    }
+    
+    )*/
+  
+  }
+
+  
+  ejecutar(){
+    this.reportesService.getInfoCruda().subscribe((res:any)=>{
+      console.log(res)
+    },(err)=>{
+      
+      console.log(err)
+    }
+    
+    )
   }
 
 }
