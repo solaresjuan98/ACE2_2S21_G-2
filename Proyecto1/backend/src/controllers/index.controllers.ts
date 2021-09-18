@@ -17,17 +17,19 @@ export async function getTest(req: Request, res: Response): Promise<Response> {
     return res.json(info[0]);
 }
 
-export async function getCruda(){
+export async function getCruda(req: Request, res: Response): Promise<Response>{
     const SerialPort = require('serialport');
     const ReadLine = require('@serialport/parser-readline')
     const port = new SerialPort("COM3", { baudRate: 9600 });
     const parser = port.pipe(new ReadLine({ delimiter: "\n" }));
+    let json
     parser.on("data", (data: any) => {
-        let json=JSON.parse(data)
-
-        return json 
+        json=JSON.parse(data)
+        console.log(json)
+        
     })
-
+    
+    return res.json('HOLA MUNDO')
 }
 
 

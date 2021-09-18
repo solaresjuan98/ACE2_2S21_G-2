@@ -18,7 +18,7 @@ import {
     getTiempoPromedio,
     getUltimoRegistro,
     getHistorialUso,
-    getCruda,
+    
     
     insertUsuario,
     getHistorialPeso,
@@ -42,7 +42,7 @@ router.route('/historialPeso/usuario/:id_usuario').get(getHistorialPeso);
 // Numero de veces promedio que se levanta el usuario
 router.route('/vecesPromedio/usuario/:id_usuario').get(getVecesPromedio);
 // Numero de horas promedio que utiliza el usuario la silla
-//router.route('/horasPromedio/usuario/:id_usuario').get(getTiempoPromedio);
+router.route('/horasPromedio/usuario/:id_usuario').get(getTiempoPromedio);
 // Ultimo registro
 router.route('/ultimoRegistro/usuario/:id_usuario').get(getUltimoRegistro);
 // Obtener horas promedio que el usuario pasa sentado
@@ -51,7 +51,7 @@ router.route('/horasPromedio/usuario/:id_usuario').get(getHorasPromedio);
 router.route('/totalHoras/usuario/:id_usuario').get(getTotalHoras);
 // Histrial de uso del usuario
 router.route('/historialUso/usuario/:id_usuario').get(getHistorialUso);
-router.route('/getInformacionCruda').get(getCruda);
+
 // Dias de mayor uso de la silla por día
 router.route('/diasMayorUso/usuario/:id_usuario').get(getDiasMayorUso);
 // Dias de mayor uso de la silla por día
@@ -75,6 +75,18 @@ port.on("open", () => {
 
     console.log("se abrió la comunicación :v")
 })
+//router.route('/getInformacionCruda').get(parser.on("data", (data: any) => {}));
+let dato="";
+router.get('/getInformacionCruda', (req, res) => {
+    res.send(`
+    <h1>${ dato }</h1>
+    <script type="text/javascript">
+function actualizar(){location.reload(true);}
+//Función para actualizar cada 5 segundos(5000 milisegundos)
+setInterval("actualizar()",3000);
+</script>
+`)}
+);
 //Variables Globales
 var bandera1 = true
 
@@ -97,6 +109,10 @@ function Promedio(s: any) {
 parser.on("data", (data: any) => {
 
     let json = JSON.parse(data);
+    dato+=data
+    //response.write(process.version);
+   // console.log(data)
+   
     if (json.sentado && json.pesoEnKg > 0.15) {
         console.log("Peso: " + json.pesoEnKg + " Kg");
         pesos.unshift(json.pesoEnKg);
