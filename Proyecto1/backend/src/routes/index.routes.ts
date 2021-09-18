@@ -14,37 +14,65 @@ import {
     indexWelcome,
     getTest,
     insertData,
-    getTiempoTotal,
     getVecesPromedio,
     getTiempoPromedio,
     getUltimoRegistro,
     getHistorialUso,
-    getCruda
+    getCruda,
     
+    insertUsuario,
+    getHistorialPeso,
+    getDiasMayorUso,
+    getDiasMenorUso,
+    registrarSilla,
+    getMaximoHorasSeguidas,
+    getIdUsuario,
+    getSillasUsuario,
+    getHorasPromedio,
+    getTotalHoras,
+    getVecesLevantado
 } from '../controllers/index.controllers'
 
 router.route('/').get(getTest);
+// Obetemer ID del usuario por correo electronico
+router.route('/usuario/:correo_electronico').get(getIdUsuario);
+
 // Historial de peso de uso del usuario
-router.route('/historialPeso/usuario/:id_usuario').get(getTiempoTotal);
+router.route('/historialPeso/usuario/:id_usuario').get(getHistorialPeso);
 // Numero de veces promedio que se levanta el usuario
 router.route('/vecesPromedio/usuario/:id_usuario').get(getVecesPromedio);
 // Numero de horas promedio que utiliza el usuario la silla
-router.route('/horasPromedio/usuario/:id_usuario').get(getTiempoPromedio);
+//router.route('/horasPromedio/usuario/:id_usuario').get(getTiempoPromedio);
 // Ultimo registro
 router.route('/ultimoRegistro/usuario/:id_usuario').get(getUltimoRegistro);
+// Obtener horas promedio que el usuario pasa sentado
+router.route('/horasPromedio/usuario/:id_usuario').get(getHorasPromedio);
+// Obtener el total de horas que ha pasado sentado el usuario
+router.route('/totalHoras/usuario/:id_usuario').get(getTotalHoras);
 // Histrial de uso del usuario
 router.route('/historialUso/usuario/:id_usuario').get(getHistorialUso);
 router.route('/getInformacionCruda').get(getCruda);
+// Dias de mayor uso de la silla por día
+router.route('/diasMayorUso/usuario/:id_usuario').get(getDiasMayorUso);
+// Dias de mayor uso de la silla por día
+router.route('/diasMenorUso/usuario/:id_usuario').get(getDiasMenorUso);
+// Veces que el usuario se ha levantado durante el dia actual
+router.route('/vecesLevantado/usuario/:id_usuario').get(getVecesLevantado);
+
+// Obtener el maximo de horas seguidas que se hizo uso de la silla por día
+router.route('/maxHorasSeguidas/usuario/:id_usuario').get(getMaximoHorasSeguidas);
+
+// Obtener sillas del usuario por id
+router.route('/sillas/usuario/:id_usuario').get(getSillasUsuario);
+
+// Insertar silla
+router.route('/registrarSilla').post(registrarSilla);
+// Registrar usuario
+router.route('/usuario').post(insertUsuario);
 // Conexión Arduino
 port.on("open", () => {
 
-    // prueba
-    /*const objTest = {
-        id_usuario: Math.floor(Math.random() * (100 - 10) + 10),
-        nombre: "Mario",
-        profesion: "Arquitecto"
-    }
-    insertData(objTest);*/
+
     console.log("se abrió la comunicación :v")
 })
 //Variables Globales

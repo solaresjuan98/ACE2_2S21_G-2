@@ -9,6 +9,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { NgxSpinnerModule } from "ngx-spinner";
 import { SpinnerComponent } from './components/spinner/spinner.component'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {HttpClientModule} from '@angular/common/http';
 
 import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 import { AngularFireModule } from '@angular/fire/compat/'
@@ -53,6 +54,7 @@ import { RegistroPesoComponent } from './graficas/registro-peso/registro-peso.co
     BrowserAnimationsModule,
     AngularFireAuthModule,
     ChartsModule,
+    HttpClientModule,
     AngularFireModule.initializeApp(environment.firebaseConfig)
   ],
   providers: [],
