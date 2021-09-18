@@ -106,6 +106,7 @@ export async function getVecesPromedio(req: Request, res: Response): Promise<Res
 
 
 // ====  Tiempo de uso promedio de la silla por día ====
+/*
 export async function getTiempoPromedio(req: Request, res: Response): Promise<Response> {
 
     const id = req.params.id_usuario;
@@ -135,6 +136,7 @@ export async function getTiempoPromedio(req: Request, res: Response): Promise<Re
 
 
 }
+*/
 
 // ==== Obtener ultimo registro del usuario ====
 export async function getUltimoRegistro(req: Request, res: Response): Promise<Response> {
@@ -214,10 +216,10 @@ export async function getHorasPromedio(req: Request, res: Response): Promise<Res
     from ( \
              select fecha_registro as fecha, SUM(timestampdiff(second, hora_inicio, hora_final) / 3600) as horas \
              from registro \
-                      join silla s on s.id_silla = registro.id_silla \
-                      join usuario u on u.id_usuario = s.id_usuario \
-             where u.id_usuario = ? \
-             group by fecha) t1", [id]);
+                    join silla s on s.id_silla = registro.id_silla \
+                    join usuario u on u.id_usuario = s.id_usuario \
+            where u.id_usuario = ? \
+            group by fecha) t1", [id]);
 
     return res.json(arrRespuesta[0]);
 
