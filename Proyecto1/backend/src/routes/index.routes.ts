@@ -138,8 +138,8 @@ parser.on("data", (data: any) => {
             //console.log("Fecha:" + fecha);
             var hora = hoy.getHours() + ':' + hoy.getMinutes() + ':' + hoy.getSeconds();
             //console.log("Hora:" + hora);
-            inicio = fecha + " " + hora
-            bandera1 = false
+            inicio = fecha + " " + hora 
+            bandera1 = false 
 
 
         }
