@@ -1,6 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ChartDataSets, ChartOptions, ChartType } from 'chart.js';
 import { BaseChartDirective, Color, Label } from 'ng2-charts';
+import { ReportesService } from 'src/app/services/reportes.service';
+import { UserService } from 'src/app/services/user.service';
 // import * as pluginAnnotations from 'chartjs-plugin-annotation';
 
 @Component({
@@ -11,12 +13,15 @@ import { BaseChartDirective, Color, Label } from 'ng2-charts';
 })
 export class HorarioUsoComponent implements OnInit {
 
+  correo = '';
+  id_usuario = 0;
+
   public lineChartData: ChartDataSets[] = [
-    { data: [65, 59, 80, 81, 56, 55, 40], label: 'Series A', yAxisID: 'y-axis-0' },
+    { data: [/*65, 59, 80, 81, 56, 55, 40*/], label: 'Hora (formato 24h)', yAxisID: 'y-axis-0' },
   ];
 
-  
-  public lineChartLabels: Label[] = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
+
+  public lineChartLabels: Label[] = [];
   public lineChartOptions: (ChartOptions & { annotation: any }) = {
     responsive: true,
     scales: {
@@ -95,9 +100,30 @@ export class HorarioUsoComponent implements OnInit {
 
   @ViewChild(BaseChartDirective, { static: true }) chart: BaseChartDirective;
 
-  constructor() { }
+  constructor(private userService: UserService, private reportesService: ReportesService) { }
 
   ngOnInit(): void {
+
+    this.correo = localStorage.getItem("correo");
+
+    // Obtener id_usuario
+    this.userService.getIdUsuario(this.correo).subscribe(data => {
+      this.id_usuario = data[0].id_usuario;
+      console.log(this.id_usuario)
+
+      // Consumir servicio de horario de uso
+
+      this.reportesService.getHorariodeUso(this.id_usuario)
+        .subscribe(({ labels, values }) => {
+          this.lineChartLabels = labels;
+          this.lineChartData[0].data = values;
+
+          this.lineChartLabels[this.lineChartLabels.length] = '';
+          this.lineChartData[0].data[this.lineChartData[0].data.length] = 0;
+        })
+
+    });
+
   }
 
   public randomize(): void {

@@ -30,7 +30,8 @@ import {
     getSillasUsuario,
     getHorasPromedio,
     getTotalHoras,
-    getVecesLevantado
+    getVecesLevantado,
+    getHorarioUso
 } from '../controllers/index.controllers'
 
 router.route('/').get(getTest);
@@ -58,6 +59,8 @@ router.route('/diasMayorUso/usuario/:id_usuario').get(getDiasMayorUso);
 router.route('/diasMenorUso/usuario/:id_usuario').get(getDiasMenorUso);
 // Veces que el usuario se ha levantado durante el dia actual
 router.route('/vecesLevantado/usuario/:id_usuario').get(getVecesLevantado);
+// Obtener horario que el usuario utiliza la silla 
+router.route('/horarioUso/usuario/:id_usuario').get(getHorarioUso);
 
 // Obtener el maximo de horas seguidas que se hizo uso de la silla por día
 router.route('/maxHorasSeguidas/usuario/:id_usuario').get(getMaximoHorasSeguidas);
