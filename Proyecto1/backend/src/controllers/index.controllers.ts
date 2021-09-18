@@ -15,6 +15,19 @@ export async function getTest(req: Request, res: Response): Promise<Response> {
     return res.json(info[0]);
 }
 
+export async function getCruda(){
+    const SerialPort = require('serialport');
+    const ReadLine = require('@serialport/parser-readline')
+    const port = new SerialPort("COM3", { baudRate: 9600 });
+    const parser = port.pipe(new ReadLine({ delimiter: "\n" }));
+    parser.on("data", (data: any) => {
+        let json=JSON.parse(data)
+
+        return json 
+    })
+
+}
+
 export async function insertData(fecha_registro: any,hora_inicio:any,hora_final:any,peso:any,silla:any) {
     
     const connection = await connect();

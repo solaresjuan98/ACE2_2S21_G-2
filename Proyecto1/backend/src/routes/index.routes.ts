@@ -18,7 +18,9 @@ import {
     getVecesPromedio,
     getTiempoPromedio,
     getUltimoRegistro,
-    getHistorialUso
+    getHistorialUso,
+    getCruda
+    
 } from '../controllers/index.controllers'
 
 router.route('/').get(getTest);
@@ -32,7 +34,7 @@ router.route('/horasPromedio/usuario/:id_usuario').get(getTiempoPromedio);
 router.route('/ultimoRegistro/usuario/:id_usuario').get(getUltimoRegistro);
 // Histrial de uso del usuario
 router.route('/historialUso/usuario/:id_usuario').get(getHistorialUso);
-
+router.route('/getInformacionCruda').get(getCruda);
 // Conexión Arduino
 port.on("open", () => {
 
@@ -50,15 +52,15 @@ var bandera1 = true
 
 var inicio = ""
 var final = ""
-var pesos:any=[];
-function Promedio(s:any) {
+var pesos: any = [];
+function Promedio(s: any) {
     let sumatoria = 0.0;
-    let cantidaNo=s.length-1;
+    let cantidaNo = s.length - 1;
     for (let a = 0; a < cantidaNo; a++) {
         sumatoria += s.pop();
     }
     s.pop();
-    sumatoria=sumatoria/(cantidaNo)
+    sumatoria = sumatoria / (cantidaNo)
     return sumatoria
 }
 
@@ -92,12 +94,12 @@ parser.on("data", (data: any) => {
             final = fecha + " " + hora
             bandera1 = true
             //AQUI ES DONDE SE HACE LA INSERCIÓN
-            
-           
+
+
             insertData(fecha, inicio, final, Promedio(pesos), 1) //1 SE NECESITA VARIABLE GLOBAL DE LA SILLA A UTILIZAR
             inicio = ""
             final = ""
-            
+
         }
     }
     // Funcion para guardar data en la bd (con timeout)
