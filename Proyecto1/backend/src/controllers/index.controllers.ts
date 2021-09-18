@@ -3,6 +3,7 @@ import { connect } from '../database'
 import { Silla } from '../interface/Silla';
 import { Usuario } from '../interface/Usuario';
 
+let idSillaGlobal = -1;
 
 export function indexWelcome(req: Request, res: Response): Response {
 
@@ -142,6 +143,7 @@ export async function getTiempoPromedio(req: Request, res: Response): Promise<Re
 export async function getUltimoRegistro(req: Request, res: Response): Promise<Response> {
 
     const id = req.params.id_usuario;
+    
     //const id_usuario
     const connection = await connect();
     const arrRespuesta = await connection.query("select * \
@@ -326,7 +328,7 @@ export async function getMaximoHorasSeguidas(req: Request, res: Response): Promi
             join silla s on s.id_silla = registro.id_silla \
             join usuario u on u.id_usuario = s.id_usuario \
         where u.id_usuario = ? \
-        group by fecha_registro order by fecha_registro", [id]);
+        group by fecha_registro order by fecha_registro desc", [id]);
 
     const arr = JSON.stringify(arrRespuesta[0]);
     const arregloParseado: any[] = JSON.parse(arr);
@@ -459,4 +461,24 @@ export async function getHorarioUso(req:Request, res: Response): Promise<Respons
     return res.json(grafica.datos)
 
 
+}
+
+
+
+
+//  ========== SETEAR ID DE SILLA A USAR
+export async function setearSilla(req:Request, res: Response) {
+    
+    const silla_seteada = req.body;
+
+    //console.log(silla_seteada.id_silla);
+    idSillaGlobal = silla_seteada.id_silla;
+    return res.json(silla_seteada)
+
+}
+
+
+export function getSillaActual(){
+
+    return idSillaGlobal;
 }

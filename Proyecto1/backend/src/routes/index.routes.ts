@@ -30,7 +30,9 @@ import {
     getHorasPromedio,
     getTotalHoras,
     getVecesLevantado,
-    getHorarioUso
+    getHorarioUso,
+    setearSilla,
+    getSillaActual
 } from '../controllers/index.controllers'
 
 router.route('/').get(getTest);
@@ -68,6 +70,10 @@ router.route('/sillas/usuario/:id_usuario').get(getSillasUsuario);
 
 // Insertar silla
 router.route('/registrarSilla').post(registrarSilla);
+
+// Setear Silla
+router.route('/setSilla').post(setearSilla);
+
 // Registrar usuario
 router.route('/usuario').post(insertUsuario);
 // Conexión Arduino
@@ -152,9 +158,15 @@ parser.on("data", (data: any) => {
             final = fecha + " " + hora
             bandera1 = true
             //AQUI ES DONDE SE HACE LA INSERCIÓN
+            let id_silla = getSillaActual();
 
-
-            insertData(fecha, inicio, final, Promedio(pesos), 1) //1 SE NECESITA VARIABLE GLOBAL DE LA SILLA A UTILIZAR
+            if(id_silla !== -1){
+                insertData(fecha, inicio, final, Promedio(pesos), id_silla)
+            }else {
+                console.log('No se pudo ingresar el registro porque no hay silla registrada')
+            }
+            
+            
             inicio = ""
             final = ""
 
