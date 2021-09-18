@@ -52,12 +52,22 @@ export class HomeComponent implements OnInit {
 
       // Obtener total de horas sentado
       this.reportesService.getTotalHoras(this.id_usuario).subscribe(data => {
-        this.horas_uso_total = parseFloat(data[0].total_horas);
+        if (data[0].total_horas === null) {
+          this.horas_uso_total = 0;
+        } else {
+          this.horas_uso_total = parseFloat(data[0].total_horas);
+          
+        }
       })
 
       // OBtener total de horas promedio que el usuario se sienta
       this.reportesService.getHorasPromediodeUso(this.id_usuario).subscribe(data => {
-        this.horas_uso_promedio = parseFloat(data[0].horas_promedio);
+        if (data[0].horas_promedio === null) {
+          this.horas_uso_promedio = 0;
+        } else {
+          this.horas_uso_promedio = parseFloat(data[0].horas_promedio);
+        }
+
       })
 
     });

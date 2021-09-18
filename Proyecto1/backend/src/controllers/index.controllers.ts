@@ -326,7 +326,7 @@ export async function getMaximoHorasSeguidas(req: Request, res: Response): Promi
             join silla s on s.id_silla = registro.id_silla \
             join usuario u on u.id_usuario = s.id_usuario \
         where u.id_usuario = ? \
-        group by fecha_registro order by fecha_registro", [id]);
+        group by fecha_registro order by max_horas_seguidas desc", [id]);
 
     const arr = JSON.stringify(arrRespuesta[0]);
     const arregloParseado: any[] = JSON.parse(arr);
