@@ -1,0 +1,2 @@
+-- OBTENER TODOS LOS REGISTROS
+http://localhost:3000/registros/historico
