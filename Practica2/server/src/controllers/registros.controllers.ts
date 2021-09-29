@@ -14,3 +14,29 @@ export async function getTest(req: Request, res: Response): Promise<Response> {
 
     return res.json(info[0]);
 }
+
+
+// Obtener temperatura promedio (por dia)
+export async function getTemperaturaPromedio(req: Request, res: Response) {
+
+    const connection = await connect();
+    const info = await connection.query(`select distinct fecha_registro, round(sum(temperatura) / count(*), 0) as temperatura_promedio
+        from registro_clima
+        group by fecha_registro`)
+
+    return res.json(info[0])
+}
+
+// Obtener velocidad del viendo promedio (por dia)
+export async function getVelocidadVientoPromedio(req:Request, res: Response) {
+    
+    const connection = await connect();
+    const info = await connection.query(`select distinct fecha_registro, round(sum(velocidad_viento) / count(*), 3) as velocidad_viento_promedio
+        from registro_clima
+        group by fecha_registro`)
+
+    return res.json(info[0])
+
+}
+
+
