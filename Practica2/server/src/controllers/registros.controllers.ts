@@ -25,6 +25,7 @@ export async function getTemperaturaPromedio(req: Request, res: Response) {
         group by fecha_registro`)
 
     return res.json(info[0])
+
 }
 
 // Obtener velocidad del viendo promedio (por dia)
@@ -38,5 +39,29 @@ export async function getVelocidadVientoPromedio(req:Request, res: Response) {
     return res.json(info[0])
 
 }
+
+// Obtener la temperatura promedio de forma global
+export async function getTemperaturaPromedioGlobal(req:Request, res: Response) {
+    
+    const connection = await connect();
+    const info = await connection.query(`select round(sum(temperatura) / count(*), 3) as prom_temperatura_global
+        from registro_clima`)
+
+    return res.json(info[0])
+
+}
+
+// Obtener la velocidad promedio de forma global
+export async function getVelocidadPromedioGlobal(req:Request, res: Response) {
+    
+    const connection = await connect();
+    const info = await connection.query(`select round(sum(velocidad_viento) / count(*), 3) as prom_vel_viento_global
+        from registro_clima`)
+
+    return res.json(info[0])
+    
+
+}
+
 
 
