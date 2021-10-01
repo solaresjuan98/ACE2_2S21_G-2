@@ -1,6 +1,5 @@
 import { App } from './app';
 
-
 // starts the app
 async function main() {
 

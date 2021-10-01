@@ -9,12 +9,18 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const app_1 = require("./app");
-// starts the app
-function main() {
+exports.connect = void 0;
+const promise_1 = require("mysql2/promise");
+function connect() {
     return __awaiter(this, void 0, void 0, function* () {
-        const app = new app_1.App(3000);
-        yield app.listen();
+        const connection = yield promise_1.createPool({
+            host: '104.197.117.240',
+            user: 'root',
+            password: '$ARQUI2_123..$',
+            database: 'practica2',
+            connectionLimit: 10
+        });
+        return connection;
     });
 }
-main();
+exports.connect = connect;

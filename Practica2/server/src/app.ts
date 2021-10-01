@@ -1,6 +1,7 @@
 // import express
 import express, { Application } from "express";
 import morgan from "morgan";
+import cors from 'cors'
 
 // Routes
 import registrosRoutes from "./routes/registros.routes";
@@ -18,6 +19,7 @@ export class App {
   middlewares() {
     this.app.use(morgan("dev"));
     this.app.use(express.json());
+    this.app.use(cors())
     //this.app.use(express.urlencoded({ extended: false }));
   }
 
