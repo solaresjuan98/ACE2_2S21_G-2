@@ -16,7 +16,7 @@ export class HomeComponent implements OnInit {
     this.climaService.getRegistros().toPromise()
     .then((res)=>{
         this.registros = res;
-        this.ultimoRegistro = this.registros[6];  
+        this.ultimoRegistro = this.registros[this.registros.length - 1];  
     })
     .catch((error)=>{
       console.log(error)
