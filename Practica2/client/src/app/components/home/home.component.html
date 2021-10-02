@@ -16,7 +16,14 @@
                                         <h3><i class="fas fa-temperature-low"></i> Temperatura</h3>
                                     </div>
                                     <div class="card-body">
-                                        <p class="fs-1">{{ultimoRegistro.temperatura}} °C</p>
+                                        <div class="row alcentro">
+                                            <div class="col">
+                                                <img src={{imgTemp}} style="width: 5rem;"/>
+                                            </div>
+                                            <div class="col">
+                                                <p class="fs-1">{{ultimoRegistro.temperatura}} °C</p>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -26,7 +33,14 @@
                                         <h3><i class="fas fa-tint"></i> Humedad</h3>
                                     </div>
                                     <div class="card-body">
-                                        <p class="fs-1">{{ultimoRegistro.humedad}} %</p>
+                                        <div class="row alcentro">
+                                            <div class="col">
+                                                <img src={{imgHum}} style="width: 5rem;"/>
+                                            </div>
+                                            <div class="col">
+                                                <p class="fs-1">{{ultimoRegistro.humedad}} %</p>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -38,7 +52,14 @@
                                         <h3><i class="fas fa-wind"></i> Velocidad de viento</h3>
                                     </div>
                                     <div class="card-body">
-                                        <p class="fs-1">{{ultimoRegistro.velocidad_viento}} km/h</p>
+                                        <div class="row alcentro">
+                                            <div class="col">
+                                                <img src={{imgVel}} style="width: 5rem;"/>
+                                            </div>
+                                            <div class="col">
+                                                <p class="fs-1">{{ultimoRegistro.velocidad_viento}} km/h</p>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -48,7 +69,14 @@
                                         <h3><i class="fas fa-compass"></i> Direccion de viento</h3>
                                     </div>
                                     <div class="card-body">
-                                        <p class="fs-1">{{ultimoRegistro.direccion_viento}}</p>
+                                        <div class="row alcentro">
+                                            <div class="col">
+                                                <img src={{imgDir}} style="width: 5rem;"/>
+                                            </div>
+                                            <div class="col">
+                                                <p class="fs-1">{{ultimoRegistro.direccion_viento}}</p>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -58,7 +86,14 @@
                                         <h3><i class="fas fa-sun"></i> Cantidad de luz</h3>
                                     </div>
                                     <div class="card-body">
-                                        <p class="fs-1">{{ultimoRegistro.temperatura}} Lumens</p>
+                                        <div class="row alcentro">
+                                            <div class="col">
+                                                <img src={{imgLuz}} style="width: 5rem;"/>
+                                            </div>
+                                            <div class="col">
+                                                <p class="fs-1">{{ultimoRegistro.temperatura}} Lumens</p>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -67,6 +102,9 @@
                     </div>
                 </div>
             </div>
+        </div>
+        <div class="text-center">
+            <h3 style="color: white;">{{estatus}}</h3>
         </div>
     </div>
 </ng-container>
