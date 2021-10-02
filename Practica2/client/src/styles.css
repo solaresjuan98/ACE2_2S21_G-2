@@ -1,0 +1,7 @@
+/* You can add global styles to this file, and also import other style files */
+body{
+    font-family: 'Roboto Mono', monospace;
+    background-repeat: no-repeat;
+    background-size:cover;
+    background-image: url('./assets/weather_bg.jpg');
+}
