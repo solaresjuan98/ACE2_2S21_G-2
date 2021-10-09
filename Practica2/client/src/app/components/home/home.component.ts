@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { parse } from 'path';
+
 import { ClimaService } from 'src/app/services/clima.service';
 
 @Component({
