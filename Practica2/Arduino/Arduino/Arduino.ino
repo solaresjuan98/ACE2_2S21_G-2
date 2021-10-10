@@ -1,6 +1,8 @@
 
 #include <SoftwareSerial.h> // libreria que permite establecer pines digitales
 #include <DHT.h>
+#define ALIMENTACION 5 
+#define RES 10000
 int dhtPin = 13;
 float velviento=0.0;
 float lectura=0;
@@ -36,13 +38,15 @@ delay(200);
 
   if(isnan(humidity) || isnan(temperature) || isnan(temperatureF))
   {
-    Serial.println("Error en la lectura del sensor");
-    //return;
+    humidity=0;
+    temperature=0;
+    temperatureF=0;
   }
 
  valorSensor = analogRead(FOTOPIN);
- valorMapeado = map(valorSensor, 900, 640, 0, 255);
-  miBT.println( json_converter(direccion(lectura),velviento,temperature,humidity,valorSensor));
+  float luz=Lumenes(valorSensor);
+ //hacer conversion aqui!!!
+  miBT.println( json_converter(direccion(lectura),velviento,temperature,humidity,luz));
 
 }
 
@@ -93,3 +97,11 @@ float CalcularVoltaje(float ingreso){
   res=(122.92*voltaje)-4.8583;
   return res;
   }
+
+float Lumenes(int lectura){
+  float lumen=0.0;
+  float voltajeSalida = float(lectura) * (ALIMENTACION / float(1023));
+  float conv = (RES * (ALIMENTACION -voltajeSalida ))/voltajeSalida; 
+  lumen=500/(conv/1000); 
+  return lumen;
+}
