@@ -15,6 +15,7 @@ import {
     getTest,
     getVelocidadPromedioGlobal,
     getVelocidadVientoPromedio,
+    insertData
 } from '../controllers/registros.controllers'
 
 // Peticion que obtiene todos los registros recoletados por el dispositivo
@@ -43,10 +44,18 @@ port.on('err',function(err:any){
     console.log(err);
 });
 parser.on("data", (data: any) => {
-    console.log(data);
 
+    const data_json = JSON.parse(data);
+    console.log(data_json );
+
+
+    var today = new Date();
+    var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+    var date = today.getFullYear()+"-"+ today.getMonth()+ "-"+today.getDate();
+    // YYYY-MM-DD
     // Insertar registros
-
+    // 2021-09-29 15:56:32
+    insertData(date, date+" "+time , data_json["v"],  data_json["h"],  data_json["t"],  data_json["d"],  data_json["l"],data_json["nu"]) ;
 })
 
 
