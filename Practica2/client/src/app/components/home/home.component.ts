@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-
 import { ClimaService } from 'src/app/services/clima.service';
 
 @Component({
@@ -9,11 +8,11 @@ import { ClimaService } from 'src/app/services/clima.service';
 })
 export class HomeComponent implements OnInit {
 
-  imgTemp = "https://i.imgur.com/hbqjLRi.png"
-  imgHum = "https://i.imgur.com/2yhMtOL.png"
-  imgVel = "https://i.imgur.com/WH5lJAf.png"
-  imgDir = "https://i.imgur.com/2lIuYxV.png"
-  imgLuz = "https://i.imgur.com/oRF5FoA.png"
+  imgTemp = ""
+  imgHum = ""
+  imgVel = ""
+  imgDir = ""
+  imgLuz = ""
 
   velViento = ""
   visibilidad = ""
@@ -30,12 +29,12 @@ export class HomeComponent implements OnInit {
       .then((res) => {
         this.registros = res;
         this.ultimoRegistro = this.registros[this.registros.length - 1];
-        /*this.iconoTemp(this.ultimoRegistro.temperatura);
+        this.iconoTemp(this.ultimoRegistro.temperatura);
         this.iconoHumedad(this.ultimoRegistro.humedad);
         this.iconoVelocidad(this.ultimoRegistro.velocidad_viento);
         this.iconoDireccion(this.ultimoRegistro.direccion_viento);
         this.iconoLuz(this.ultimoRegistro.cantidad_luz);
-        this.varStatus();*/
+        this.varStatus();
       })
       .catch((error) => {
         console.log(error)
@@ -77,7 +76,19 @@ export class HomeComponent implements OnInit {
   }
 
   iconoVelocidad(v: number) {
-
+    if (v <= 20) {
+      this.imgVel = "https://i.imgur.com/h6kgywu.png"
+    } else if (v > 20 && v <= 40) {
+      this.imgVel = "https://i.imgur.com/TIV7r49.png"
+    } else if (v > 40 && v <= 60) {
+      this.imgVel = "https://i.imgur.com/8QSOKJ1.png"
+    } else if (v > 60 && v <= 80) {
+      this.imgVel = "https://i.imgur.com/nRAFOMe.png"
+    } else if (v > 80 && v <= 100) {
+      this.imgVel = "https://i.imgur.com/OKJyUTC.png"
+    } else {
+      this.imgVel = "https://i.imgur.com/tVQjN4G.png"
+    }
   }
 
   iconoDireccion(d: string) {
@@ -125,18 +136,18 @@ export class HomeComponent implements OnInit {
       this.velViento = "normal"
     }
 
-    if (this.ultimoRegistro.cantidad_luz > 50) {
+    if (this.ultimoRegistro.nublado == 0) {
       this.visibilidad = "despejada"
     } else {
       this.visibilidad = "nublada"
     }
 
     if (this.ultimoRegistro.temperatura >= promediotemp && this.ultimoRegistro.humedad >= 50) {
-      this.lluviacalor = "sin calor"
-    } else if (this.ultimoRegistro.temperatura < promediotemp && this.ultimoRegistro.humedad >= 50) {
-      this.lluviacalor = "con lluvia"
-    } else if (this.ultimoRegistro.temperatura >= promediotemp && this.ultimoRegistro.cantidad_luz < 50) {
       this.lluviacalor = "con calor"
+    } else if (this.ultimoRegistro.temperatura < promediotemp && this.ultimoRegistro.humedad >= 50 && this.ultimoRegistro.nublado == 1) {
+      this.lluviacalor = "con lluvia"
+    } else if (this.ultimoRegistro.temperatura <= promediotemp && this.ultimoRegistro.cantidad_luz < 50) {
+      this.lluviacalor = "sin calor"
     } else {
       this.lluviacalor = "sin lluvia"
     }
