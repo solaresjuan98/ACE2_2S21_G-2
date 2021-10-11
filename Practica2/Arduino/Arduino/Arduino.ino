@@ -45,12 +45,12 @@ delay(200);
 
  valorSensor = analogRead(FOTOPIN);
   float luz=Lumenes(valorSensor);
- //hacer conversion aqui!!!
-  miBT.println( json_converter(direccion(lectura),velviento,temperature,humidity,luz));
+  String nublado=DiaNublado(luz);
+  miBT.println( json_converter(direccion(lectura),velviento,temperature,humidity,luz,nublado));
 
 }
 
-String json_converter(char d, float v, float t, float h, float l){
+String json_converter(char d, float v, float t, float h, float l,String nu){
   String json="";
   /*json.concat(d);
   json+=",";
@@ -71,6 +71,8 @@ String json_converter(char d, float v, float t, float h, float l){
   json.concat(d);
   json+=",\"l\":\"";
   json.concat(l);
+  json+=",\"nu\":\"";
+  json.concat(nu);
   json+="\"}";
   return json;
 }
@@ -105,3 +107,13 @@ float Lumenes(int lectura){
   lumen=500/(conv/1000); 
   return lumen;
 }
+
+String DiaNublado(float l){
+if(l<=135.23){
+return "true";
+}else{
+return "false";
+}
+}
+
+
