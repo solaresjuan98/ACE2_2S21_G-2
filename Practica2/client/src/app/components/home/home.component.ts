@@ -30,6 +30,7 @@ export class HomeComponent implements OnInit {
       .then((res) => {
         this.registros = res;
         this.ultimoRegistro = this.registros[this.registros.length - 1];
+        console.log(this.ultimoRegistro)
         /*this.iconoTemp(this.ultimoRegistro.temperatura);
         this.iconoHumedad(this.ultimoRegistro.humedad);
         this.iconoVelocidad(this.ultimoRegistro.velocidad_viento);
