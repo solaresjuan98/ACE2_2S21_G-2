@@ -1,0 +1,9 @@
+{
+  "devDependencies": {
+    "electron": "^15.1.0",
+    "electron-rebuild": "^3.2.3"
+  },
+  "dependencies": {
+    "escpos": "^3.0.0-alpha.6"
+  }
+}
