@@ -7,6 +7,22 @@ export function indexWelcome(req: Request, res: Response): Response {
     return res.json('Peticion de prueba');
 }
 
+// Insertar Datos
+export async function insertData(fecha_registro: String, hora_registro: any, velocidad_viento: number, humedad: number, temperatura: number, direccion_viento: string, cantidad_luz: number, nublado: number) {
+    
+    const connection = await connect();
+    console.log("Insertando...");
+
+    try {
+        await connection.query(`insert into registro_clima(fecha_registro, hora_registro, velocidad_viento, humedad, temperatura, direccion_viento,
+            cantidad_luz, nublado) values ( '${fecha_registro}', '${hora_registro}', ${velocidad_viento}, ${humedad}, ${temperatura}, '${direccion_viento}', ${cantidad_luz}, ${nublado} )`);
+        console.log("Ya se pudo insertar");
+    } catch (error) {
+        console.log(error);
+    }
+
+}
+
 export async function getTest(req: Request, res: Response): Promise<Response> {
 
     const connection = await connect();
