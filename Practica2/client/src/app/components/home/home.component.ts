@@ -50,6 +50,30 @@ export class HomeComponent implements OnInit {
         this.spinner.stopSpinner();
       })
   }
+  recargarData(){
+    this.spinner.getSpinner();
+    this.climaService.getRegistros().toPromise()
+      .then((res) => {
+        this.registros = res;
+        this.ultimoRegistro = this.registros[this.registros.length - 1];
+        this.spinner.stopSpinner();
+        this.iconoTemp(this.ultimoRegistro.temperatura);
+        this.iconoHumedad(this.ultimoRegistro.humedad);
+        this.iconoVelocidad(this.ultimoRegistro.velocidad_viento);
+        this.iconoDireccion(this.ultimoRegistro.direccion_viento);
+        this.iconoLuz(this.ultimoRegistro.cantidad_luz);
+        this.varStatus();
+        
+      })
+      .catch((error) => {
+        Swal.fire('Error al comunicarse con el servidor', `<strong>
+            Ocurrio un error al comunicarse con el servidor, por favor, 
+            intentelo mas tarde.
+            </strong>`, 'error');
+        console.log(error);
+        this.spinner.stopSpinner();
+      })
+  }
 
   iconoTemp(t: number) {
     if (t < 0) {
@@ -102,25 +126,25 @@ export class HomeComponent implements OnInit {
   }
 
   iconoDireccion(d: string) {
-    if (d == "Norte") {
+    if (d == "N") {
       this.imgDir = "https://i.imgur.com/2lIuYxV.png"
-    } else if (d == "Sur") {
+    } else if (d == "S") {
       this.imgDir = "https://i.imgur.com/8h3Mbes.png"
-    } else if (d == "Este") {
+    } else if (d == "E") {
       this.imgDir = "https://i.imgur.com/7RrI9ln.png"
-    } else if (d == "Oeste") {
+    } else if (d == "O") {
       this.imgDir = "https://i.imgur.com/hPNorAf.png"
     }
   }
 
   iconoLuz(l: number) {
-    if (l <= 10) {
+    if (l <= 100) {
       this.imgLuz = "https://i.imgur.com/3VqD9FI.png"
-    } else if (l > 10 && l <= 30) {
+    } else if (l > 100 && l <= 200) {
       this.imgLuz = "https://i.imgur.com/GcH9tOY.png"
-    } else if (l > 30 && l <= 50) {
+    } else if (l > 200 && l <= 300) {
       this.imgLuz = "https://i.imgur.com/ujoBQfY.png"
-    } else if (l > 50 && l <= 70) {
+    } else if (l > 300 && l <= 400) {
       this.imgLuz = "https://i.imgur.com/DgJgaJL.png"
     } else {
       this.imgLuz = "https://i.imgur.com/oRF5FoA.png"
