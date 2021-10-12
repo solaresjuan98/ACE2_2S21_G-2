@@ -3,3 +3,19 @@
     align-items: center; 
     justify-content: center;
 }
+
+.no-outline{
+    border:0;
+    outline: none;
+}
+.no-outline:hover{
+    outline: none;
+}
+
+.no-outline:focus{
+    outline: none;
+}
+
+button{
+    outline: none;
+}
