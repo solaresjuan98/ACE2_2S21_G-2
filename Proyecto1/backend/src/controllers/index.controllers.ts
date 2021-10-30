@@ -399,6 +399,10 @@ export async function getSillasUsuario(req: Request, res: Response) {
 }
 
 
+
+
+
+
 // ==== INSERTAR USUARIO NUEVO
 export async function insertUsuario(req: Request, res: Response) {
 
@@ -469,10 +473,11 @@ export async function getHorarioUso(req:Request, res: Response): Promise<Respons
 //  ========== SETEAR ID DE SILLA A USAR
 export async function setearSilla(req:Request, res: Response) {
     
-    const silla_seteada = req.body;
+    const silla_seteada = req.params.id_usuario;
 
     //console.log(silla_seteada.id_silla);
-    idSillaGlobal = silla_seteada.id_silla;
+    idSillaGlobal = parseInt(silla_seteada);
+    console.log(idSillaGlobal)
     return res.json(silla_seteada)
 
 }

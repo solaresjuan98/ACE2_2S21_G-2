@@ -5,7 +5,7 @@ const router = Router();
 // Arduino
 const SerialPort = require('serialport');
 const ReadLine = require('@serialport/parser-readline')
-const port = new SerialPort("COM3", { baudRate: 9600 });
+const port = new SerialPort("COM4", { baudRate: 4800 });
 const parser = port.pipe(new ReadLine({ delimiter: "\n" }));
 
 
@@ -37,10 +37,11 @@ port.on("open", () => {
 
     // prueba
     console.log("se abrió la comunicación :v")
+    
 })
 
 parser.on("data", (data: any) => {
-    console.log("data");
+    console.log(data);
 
     // Insertar registros
 

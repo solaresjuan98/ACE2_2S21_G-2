@@ -85,7 +85,12 @@ export class HomeComponent implements OnInit {
       this.httpClient.post(this.url, jsonData).toPromise().then((data: any) =>{
         localStorage.setItem("silla", data)
       })*/
-      alert("Hay que hacer la seleccion de la ubicación xD")
+      this.sillaService.setearSilla(ubicacion).subscribe(data => {
+        alert("Silla seleccionada")
+      })
+      
+
+      //alert("Silla seleccionada")
     } else {
       alert("Debe elegir una ubicacion")
     }

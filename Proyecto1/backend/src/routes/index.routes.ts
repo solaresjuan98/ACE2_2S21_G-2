@@ -18,7 +18,7 @@ import {
     getUltimoRegistro,
     getHistorialUso,
 
-
+    setearSilla,
     insertUsuario,
     getHistorialPeso,
     getDiasMayorUso,
@@ -31,7 +31,6 @@ import {
     getTotalHoras,
     getVecesLevantado,
     getHorarioUso,
-    setearSilla,
     getSillaActual
 } from '../controllers/index.controllers'
 
@@ -70,12 +69,10 @@ router.route('/sillas/usuario/:id_usuario').get(getSillasUsuario);
 
 // Insertar silla
 router.route('/registrarSilla').post(registrarSilla);
-
-// Setear Silla
-router.route('/setSilla').post(setearSilla);
-
 // Registrar usuario
 router.route('/usuario').post(insertUsuario);
+
+router.route('/setSilla/:id_usuario').get(setearSilla);
 // Conexión Arduino
 port.on("open", () => {
 
@@ -165,8 +162,9 @@ parser.on("data", (data: any) => {
             }else {
                 console.log('No se pudo ingresar el registro porque no hay silla registrada')
             }
+
             
-            
+            //SAQUENME DE
             inicio = ""
             final = ""
 

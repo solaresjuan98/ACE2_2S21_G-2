@@ -15,6 +15,11 @@ export class SillaService {
     return this.http.post("http://localhost:3000/registrarSilla", { nombre_silla, ubicacion_silla, id_usuario })
   }
 
+  setearSilla(id:any) {
+    return this.http.get(`http://localhost:3000/setSilla/${id}`)
+  }
+
+
   // Obtener las sillas del usuario por su id
   obtenerSillasporId(id_usuario: number) {
 
