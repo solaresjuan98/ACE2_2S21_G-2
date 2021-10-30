@@ -124,7 +124,7 @@ function Promedio(s: any) {
 
 
 parser.on("data", (data: any) => {
-
+    
     let json = JSON.parse(data);
     dato += "<tr ><td class='table-light'>"+data+"</td></tr>"
     //response.write(process.version);
