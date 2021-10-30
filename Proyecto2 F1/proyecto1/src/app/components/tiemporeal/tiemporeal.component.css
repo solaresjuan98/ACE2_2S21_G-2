@@ -1,0 +1,9 @@
+.navegacion {
+    width: 100vw;
+}
+
+.alcentro {
+    display: flex; 
+    align-items: center; 
+    justify-content: center;
+}

@@ -1,0 +1,21 @@
+<div class="navegacion"><app-navbar></app-navbar></div>
+
+<div class="card container mt-5"> 
+    <div>
+        <div>
+        <div style="display: block">   
+            <canvas baseChart
+                [datasets]="barChartData"
+                [labels]="barChartLabels"
+                [options]="barChartOptions"
+                [legend]="barChartLegend"
+                [chartType]="barChartType"
+                [colors]="colors"
+                >
+            </canvas>
+        </div>
+        <span>**Maxima cantidad de horas seguidas que se dió uso a la silla</span>
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,39 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow-lg">
+    <div class="container-fluid">
+        <a class="navbar-brand" routerLink="/home">Proyecto 1</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01"
+            aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarColor01">
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item">
+                    <a class="nav-link" routerLink="/home/mi-peso">Mi Peso</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" routerLink="/home/menorUso">Menor uso</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" routerLink="/home/mayorUso">Mayor uso</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" routerLink="/home/horarioUso">Horario uso</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" routerLink="/home/historialTiempoUso">Historial uso</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="http://localhost:3000/getInformacionCruda">Tiempo Real</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" routerLink="/home/registroSilla">Registrar Silla</a>
+                </li>
+                
+            </ul>
+            <form class="d-flex">
+                <button class="btn btn-outline-danger" type="submit" (click)="cerrarSesion()">Cerrar Sesión</button>
+            </form>
+        </div>
+    </div>
+</nav>

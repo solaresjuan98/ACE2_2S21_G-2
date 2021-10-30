@@ -1,0 +1,27 @@
+<div class="navegacion">
+    <app-navbar></app-navbar>
+</div>
+
+<div class="alcentro">
+    <div class="card mt-5 alcentro" style="width: 40vw;">
+        <img src="https://i.imgur.com/ewn3KjI.png" class="mt-5 mb-5" style="width: 8rem;" />
+
+        <form class="alcentro mb-5">
+            <div>
+                <label class="visually-hidden" for="autoSizingInput">Nombre</label>
+                <input type="text" class="form-control" id="nombresilla">
+            </div>
+        </form>
+
+        <form class="alcentro mb-5">
+            <div>
+                <label class="visually-hidden" for="autoSizingInput">Ubicación</label>
+                <input type="text" class="form-control" id="ubicacion">
+            </div>
+        </form>
+
+        <div class="mb-5">
+            <button type="submit" class="btn btn-primary" style="width: 12rem;" (click)="registrarSilla()">Registrar</button>
+        </div>
+    </div>
+</div>

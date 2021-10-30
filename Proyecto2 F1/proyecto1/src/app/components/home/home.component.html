@@ -1,0 +1,45 @@
+<div class="navegacion">
+    <app-navbar></app-navbar>
+</div>
+
+<div class="alcentro">
+    <div class="card mt-5 alcentro" style="width: 90vw; border-radius: 5px;">
+        
+        <h5 class="mt-5 mb-2">¿Cuál silla estás utilizando?</h5>
+        <form class="mb-3">
+            <select class="form-select mr-5" style="width: 10rem;" id="ubicacion" >
+
+                <option selected>--Ubicación--</option>
+               
+                <option *ngFor="let item of datos" value="{{item.id_silla}}">{{item.nombre_silla}} | {{item.ubicacion_silla}}</option>
+            </select>
+            <button class="btn btn-dark" style="width: 10rem;" (click)="aceptar()">Aceptar</button>
+        </form>
+
+        <div class="row mb-5">
+
+            <div class="col" style="text-align: center; vertical-align: middle;">
+                <h4>Has usado esta silla por <h2 style="color:goldenrod;">{{ horas_uso_total }}</h2>horas</h4>
+            </div>
+
+            <div class="col" style="text-align: center; vertical-align: middle;">
+                <h4>Hoy te has levantado <h2 style="color: goldenrod;">{{ levantadas }}</h2>veces</h4>
+            </div>
+
+            <div class="col" style="text-align: center; vertical-align: middle;">
+                <h4>En promedio usas esta silla <h2 style="color: goldenrod;">{{ horas_uso_promedio }}</h2>horas al día</h4>
+            </div>
+        </div>
+
+        <!--Aqui se coloca la hora de inicio y el contador de tiempo-->
+        <h3 class="mb-5">Uso en tiempo Real:</h3>
+        <div class="mb-3 alcentro">
+            <h4>Hora de inicio: </h4>
+            <h3 style="color: goldenrod;">{{ horainicio }}</h3>
+        </div>
+        <div class="mb-5 alcentro">
+            <h4>Tiempo Sentado: </h4>
+            <h3 style="color: goldenrod;">{{ tiempo }}</h3>
+        </div>
+    </div>
+</div>

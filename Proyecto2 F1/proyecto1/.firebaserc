@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "logindevelop-620dc": {
+      "hosting": {
+        "loginFirebase": [
+          "logindevelop-620dc"
+        ]
+      }
+    }
+  }
+}
