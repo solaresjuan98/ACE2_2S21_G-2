@@ -4,66 +4,118 @@
             <div class="col-md-12">
                 <div class="card border-0 bg-transparent">
                     <div class="card-header text-center border-0 bg-transparent text-white fw-bolder">
-                        <h1>{{ultimoRegistro.fecha_registro | date:'fullDate' }}</h1>
+                        <div class="row text-center">
+                            <div class="col-md-6">
+                                <h1><i class="fas fa-cloud-sun"></i> Ciudad de Guatemala</h1>
+                            </div>
+                            <div class="col-md-6">
+                                <h2>{{ultimoRegistro.fecha_registro | date:'fullDate' }}</h2>
+                            </div>
+                        </div>
                         <hr>
-                        <h2>Ultima actualizacion {{ultimoRegistro.hora_registro | date:'mediumTime'}}</h2>
+                        <div class="d-flex flex-row justify-content-center align-self-center">
+                            <h2 class="m-4">Ultima actualizacion {{ultimoRegistro.hora_registro | date:'mediumTime'}}
+                            </h2>
+                            <button class="bg-transparent text-white fs-4 no-outline" (click)="recargarData()"><i class="fas fa-redo-alt"></i></button>
+                        </div>
+
                     </div>
                     <div class="card-body">
                         <div class="row pb-4">
-                            <div class="col-md-6">
-                                <div class="card shadow rounded text-center">
-                                    <div class="card-header bg-dark text-white border-0">
-                                        <h3><i class="fas fa-temperature-low"></i> Temperatura</h3>
-                                    </div>
+                            <div class="col-md-12">
+                                <div class="card border-0 text-white rounded text-center bg-transparent">
                                     <div class="card-body">
-                                        <p class="fs-1">{{ultimoRegistro.temperatura}} °C</p>
+                                        <div class="row alcentro">
+                                            <div class="col">
+                                                <h1 class="fs-1">{{ultimoRegistro.temperatura}} °C
+                                                    <img src={{imgTemp}} style="width: 4rem;" />
+                                                </h1>
+
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
+                        </div>
+                        <div class="row text-center pb-4">
+                            <div class="text-center">
+                                <h3 style="color: white;">{{estatus}}</h3>
+                            </div>
+                        </div>
+                        <hr class="text-white">
+                        <div class="row p-4">
                             <div class="col-md-6">
                                 <div class="card shadow rounded text-center">
                                     <div class="card-header bg-dark text-white border-0">
                                         <h3><i class="fas fa-tint"></i> Humedad</h3>
                                     </div>
                                     <div class="card-body">
-                                        <p class="fs-1">{{ultimoRegistro.humedad}} %</p>
+                                        <div class="row alcentro">
+                                            <div class="col">
+                                                <img src={{imgHum}} style="width: 5rem;" />
+                                            </div>
+                                            <div class="col">
+                                                <p class="fs-1">{{ultimoRegistro.humedad}} %</p>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="row pt-4">
-                            <div class="col-md-4">
+                            <div class="col-md-6">
                                 <div class="card shadow rounded text-center">
                                     <div class="card-header bg-dark text-white border-0">
                                         <h3><i class="fas fa-wind"></i> Velocidad de viento</h3>
                                     </div>
                                     <div class="card-body">
-                                        <p class="fs-1">{{ultimoRegistro.velocidad_viento}} km/h</p>
+                                        <div class="row alcentro">
+                                            <div class="col">
+                                                <img src={{imgVel}} style="width: 5rem;" />
+                                            </div>
+                                            <div class="col">
+                                                <p class="fs-1">{{ultimoRegistro.velocidad_viento}} km/h</p>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-4">
+                        </div>
+                        <div class="row p-4">
+                            <div class="col-md-6">
                                 <div class="card shadow rounded text-center">
                                     <div class="card-header bg-dark text-white border-0">
                                         <h3><i class="fas fa-compass"></i> Direccion de viento</h3>
                                     </div>
                                     <div class="card-body">
-                                        <p class="fs-1">{{ultimoRegistro.direccion_viento}}</p>
+                                        <div class="row alcentro">
+                                            <div class="col">
+                                                <img src={{imgDir}} style="width: 5rem;" />
+                                            </div>
+                                            <div class="col">
+                                                <p class="fs-1">{{ultimoRegistro.direccion_viento}}</p>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-6 ">
                                 <div class="card shadow rounded text-center">
                                     <div class="card-header bg-dark text-white border-0">
                                         <h3><i class="fas fa-sun"></i> Cantidad de luz</h3>
                                     </div>
                                     <div class="card-body">
-                                        <p class="fs-1">{{ultimoRegistro.temperatura}} Lumens</p>
+                                        <div class="row alcentro">
+                                            <div class="col">
+                                                <img src={{imgLuz}} style="width: 5rem;" />
+                                            </div>
+                                            <div class="col">
+                                                <p class="fs-1">{{ultimoRegistro.cantidad_luz}} Lumens</p>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
+                            <button class="btn btn-dark" (click)="recargarData()"><i class="fas fa-redo-alt"></i> Actualizar</button>
                         </div>
-
                     </div>
                 </div>
             </div>

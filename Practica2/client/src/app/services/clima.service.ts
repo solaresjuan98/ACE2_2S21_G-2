@@ -13,4 +13,12 @@ export class ClimaService {
   public getRegistros(){
     return this.http.get(`${this.API_URI}/historico`)
   }
+
+  public velViento(){
+    return this.http.get(`${this.API_URI}/velocidadviento/promGlobal`)
+  }
+
+  public tempProm(){
+    return this.http.get(`${this.API_URI}/temperatura/promGlobal`)
+  }
 }

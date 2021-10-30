@@ -1,2 +1,12 @@
--- OBTENER TODOS LOS REGISTROS
+OBTENER TODOS LOS REGISTROS
 http://localhost:3000/registros/historico
+OBTENER LAS TEMPERATURAS PROMEDIO POR DIA
+http://localhost:3000/registros/temperatura/promedio
+OBTENER LAS VELOCIDADES DEL VIENTO PROMEDIO POR DIA
+http://localhost:3000/registros/velocidadviento/promedio
+OBTENER EL PROMEDIO DE LA TEMPERATURA GLOBAL
+http://localhost:3000/registros/temperatura/promGlobal
+OBTENER EL PRIMEDIO DE LA VELOCIDAD GLOBAL
+http://localhost:3000/registros/velocidadviento/promGlobal
+
+
