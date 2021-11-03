@@ -26,6 +26,7 @@ import { ChartsModule } from 'ng2-charts';
 import { HorarioUsoComponent } from './graficas/horario-uso/horario-uso.component';
 import { TiempoUsoComponent } from './graficas/tiempo-uso/tiempo-uso.component';
 import { RegistroPesoComponent } from './graficas/registro-peso/registro-peso.component';
+import { ProductividadComponent } from './graficas/productividad/productividad.component';
 
 
 @NgModule({
@@ -44,7 +45,8 @@ import { RegistroPesoComponent } from './graficas/registro-peso/registro-peso.co
     MenuComponent,
     HorarioUsoComponent,
     TiempoUsoComponent,
-    RegistroPesoComponent
+    RegistroPesoComponent,
+    ProductividadComponent
   ],
   imports: [
     BrowserModule,

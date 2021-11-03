@@ -11,6 +11,7 @@ import { HorarioUsoComponent } from './graficas/horario-uso/horario-uso.componen
 import { TiempoUsoComponent } from './graficas/tiempo-uso/tiempo-uso.component';
 import { MayorUsoComponent } from './graficas/mayor-uso/mayor-uso.component';
 import { RegistroPesoComponent } from './graficas/registro-peso/registro-peso.component';
+import { ProductividadComponent } from './graficas/productividad/productividad.component';
 
 const routes: Routes = [
   {
@@ -62,6 +63,11 @@ const routes: Routes = [
   {
     path: 'home/mi-peso',
     component: RegistroPesoComponent
+  },
+  // productividad
+  {
+    path: 'home/productividad',
+    component: ProductividadComponent
   }
   
 ];
