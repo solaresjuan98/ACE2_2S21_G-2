@@ -33,6 +33,41 @@ export class ReportesService {
       )
   }
 
+  getHistorialUsoPorSemana(id_usuario: number,no_semana:number) {
+    return this.http.get(`http://localhost:3000/historialUso/usuario/${id_usuario}/${no_semana}`)
+      .pipe(
+        map(data => {
+          const labels = Object.keys(data);
+          const values: HistorialUso[] = Object.values(data);
+          return { labels, values }
+        })
+      )
+  }
+
+  getHistorialUsoPorMesAnio(id_usuario: number,no_mes:number,no_anio:number) {
+    return this.http.get(`http://localhost:3000/historialUso/usuario/${id_usuario}/${no_mes}/${no_anio}`)
+      .pipe(
+        map(data => {
+          const labels = Object.keys(data);
+          const values: HistorialUso[] = Object.values(data);
+          return { labels, values }
+        })
+      )
+  }
+
+  getHistorialUsoPorDiaMesAnio(id_usuario: number,no_dia:number,no_mes:number,no_anio:number) {
+    return this.http.get(`http://localhost:3000/historialUso/usuario/${id_usuario}/${no_dia}/${no_mes}/${no_anio}`)
+      .pipe(
+        map(data => {
+          const labels = Object.keys(data);
+          const values: HistorialUso[] = Object.values(data);
+          return { labels, values }
+        })
+      )
+  }
+
+
+
   getHistorialPeso(id_usuario: number) {
     return this.http.get(`http://localhost:3000/historialPeso/usuario/${id_usuario}`)
       .pipe(

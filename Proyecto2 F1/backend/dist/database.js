@@ -14,10 +14,11 @@ const promise_1 = require("mysql2/promise");
 function connect() {
     return __awaiter(this, void 0, void 0, function* () {
         const connection = yield promise_1.createPool({
-            host: '104.197.117.240',
-            user: 'root',
-            password: '',
-            database: 'proyecto1',
+            host: 'mysqlroot2021.mysql.database.azure.com',
+            user: 'masteradminpro',
+            password: '$ARQUI2_123..$',
+            port: 3306,
+            database: 'proyecto2_ace2',
             connectionLimit: 10
         });
         return connection;

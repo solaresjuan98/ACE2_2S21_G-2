@@ -5,7 +5,7 @@ const router = express_1.Router();
 // Arduino
 const SerialPort = require('serialport');
 const ReadLine = require('@serialport/parser-readline');
-const port = new SerialPort("COM3", { baudRate: 9600 });
+const port = new SerialPort("COM6", { baudRate: 9600 });
 const parser = port.pipe(new ReadLine({ delimiter: "\n" }));
 // no es necesario
 const index_controllers_1 = require("../controllers/index.controllers");

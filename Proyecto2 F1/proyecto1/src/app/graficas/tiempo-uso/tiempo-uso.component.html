@@ -3,7 +3,58 @@
 
 <div class="card container mt-5">
     <h1 class="mt-5">Historial del tiempo de uso</h1>
+    <br/>
+    <div class="jumbotron jumbotron-fluid">
+        <div class="container">
+          <h5 class="display-6">Filtros</h5>
+          <br/>
+          <div class="container">
+            <div class="row">
+              <div class="col-sm text-center">
+                <select #Semana>
+                    <option value=0>Seleccione una Semana</option>
+                    <option *ngFor="let se of semanas" value={{se}}>Semana {{se}}</option>
+                </select>
+                <br/>
+                <br/>
+                <button type="button" class="btn btn-secondary" (click)="FiltrarPorSemana()">Filtrar</button>
+              </div>
+              <div class="col-sm text-center">
+                <select #Mes>
+                    <option value="0">Seleccione un Mes</option>
+                    <option value="1">Enero</option>
+                    <option value="2">Febrero</option>
+                    <option value="3">Marzo</option>
+                    <option value="4">Abril</option>
+                    <option value="5">Mayo</option>
+                    <option value="6">Junio</option>
+                    <option value="7">Julio</option>
+                    <option value="8">Agosto</option>
+                    <option value="9">Septiembre</option>
+                    <option value="10">Octubre</option>
+                    <option value="11">Noviembre</option>
+                    <option value="12">Diciembre</option>
+                </select>
 
+                <select #Anio>
+                    <option value=0>Seleccione un Año</option>
+                    <option value="2021">2021</option>
+                </select>
+                <br/>
+                <br/>
+
+                <button type="button" class="btn btn-secondary" (click)="FiltrarPorMes()">Filtrar</button>
+              </div>
+              <div class="col-sm text-center">
+                <input type="date" #Fecha>
+                <br/>
+                <br/>
+                <button type="button" (click)="FiltrarPorFecha()" class="btn btn-secondary">Filtrar</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     <hr>
 
     <div class="alert alert-info" *ngIf="historialUso.length === 0; else divTable">
@@ -11,6 +62,7 @@
     </div>
 
     <ng-template #divTable>
+
         <table class="table mb-5">
             <!-- encabezado de la tabla -->
             <thead>

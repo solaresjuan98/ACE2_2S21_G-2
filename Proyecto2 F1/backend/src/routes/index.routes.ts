@@ -6,7 +6,7 @@ const router = Router();
 // Arduino
 const SerialPort = require('serialport');
 const ReadLine = require('@serialport/parser-readline')
-const port = new SerialPort("COM4", { baudRate: 9600 });
+const port = new SerialPort("COM6", { baudRate: 9600 });
 const parser = port.pipe(new ReadLine({ delimiter: "\n" }));
 
 // no es necesario
@@ -31,7 +31,10 @@ import {
     getTotalHoras,
     getVecesLevantado,
     getHorarioUso,
-    getSillaActual
+    getSillaActual,
+    getHistorialUsoPorSemana,
+    getHistorialUsoPorMesAnio,
+    getHistorialUsoPorDiaMesAnio
 } from '../controllers/index.controllers'
 
 router.route('/').get(getTest);
@@ -40,6 +43,9 @@ router.route('/usuario/:correo_electronico').get(getIdUsuario);
 
 // Historial de peso de uso del usuario
 router.route('/historialPeso/usuario/:id_usuario').get(getHistorialPeso);
+
+
+
 // Numero de veces promedio que se levanta el usuario
 router.route('/vecesPromedio/usuario/:id_usuario').get(getVecesPromedio);
 
@@ -51,7 +57,12 @@ router.route('/horasPromedio/usuario/:id_usuario').get(getHorasPromedio);
 router.route('/totalHoras/usuario/:id_usuario').get(getTotalHoras);
 // Histrial de uso del usuario
 router.route('/historialUso/usuario/:id_usuario').get(getHistorialUso);
-
+// Histrial de uso del usuario por semana
+router.route('/historialUso/usuario/:id_usuario/:no_semana').get(getHistorialUsoPorSemana);
+// Histrial de uso del usuario por mes y año
+router.route('/historialUso/usuario/:id_usuario/:no_mes/:no_anio').get(getHistorialUsoPorMesAnio);
+// Histrial de uso del usuario por dia mes y año
+router.route('/historialUso/usuario/:id_usuario/:no_dia/:no_mes/:no_anio').get(getHistorialUsoPorDiaMesAnio);
 // Dias de mayor uso de la silla por día
 router.route('/diasMayorUso/usuario/:id_usuario').get(getDiasMayorUso);
 // Dias de mayor uso de la silla por día

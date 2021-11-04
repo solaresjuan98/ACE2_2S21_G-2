@@ -176,6 +176,64 @@ export async function getHistorialUso(req: Request, res: Response): Promise<Resp
 }
 
 
+// ==== Historial del tiempo de uso de la silla por Semana
+export async function getHistorialUsoPorSemana(req: Request, res: Response): Promise<Response> {
+
+
+    const id = req.params.id_usuario;
+    const semana = req.params.no_semana;
+    //const id_usuario
+    const connection = await connect();
+    const arrRespuesta = await connection.query(`select date(fecha_registro) as fecha, time(hora_inicio) as hora_inicio, time(hora_final) as hora_final 
+        from registro 
+                join silla s on s.id_silla = registro.id_silla 
+                join usuario u on u.id_usuario = s.id_usuario 
+        where u.id_usuario = ${id} and week(fecha_registro)= ${semana} 
+        group by fecha, registro.hora_inicio, registro.hora_final order by fecha asc`);
+
+    return res.json(arrRespuesta[0]);
+}
+
+// ==== Historial del tiempo de uso de la silla por Mes y Año
+export async function getHistorialUsoPorMesAnio(req: Request, res: Response): Promise<Response> {
+
+
+    const id = req.params.id_usuario;
+    const mes = req.params.no_mes;
+    const anio= req.params.no_anio;
+    //const id_usuario
+    const connection = await connect();
+    const arrRespuesta = await connection.query(`select date(fecha_registro) as fecha, time(hora_inicio) as hora_inicio, time(hora_final) as hora_final 
+        from registro 
+                join silla s on s.id_silla = registro.id_silla 
+                join usuario u on u.id_usuario = s.id_usuario 
+        where u.id_usuario = ${id} and month(fecha_registro)= ${mes} and year(fecha_registro)= ${anio}
+        group by fecha, registro.hora_inicio, registro.hora_final order by fecha asc`);
+
+    return res.json(arrRespuesta[0]);
+}
+
+// ==== Historial del tiempo de uso de la silla por Mes y Año
+export async function getHistorialUsoPorDiaMesAnio(req: Request, res: Response): Promise<Response> {
+
+
+    const id = req.params.id_usuario;
+    const dia= req.params.no_dia;
+    const mes = req.params.no_mes;
+    const anio= req.params.no_anio;
+    //const id_usuario
+    const connection = await connect();
+    const arrRespuesta = await connection.query(`select date(fecha_registro) as fecha, time(hora_inicio) as hora_inicio, time(hora_final) as hora_final 
+        from registro 
+                join silla s on s.id_silla = registro.id_silla 
+                join usuario u on u.id_usuario = s.id_usuario 
+        where u.id_usuario = ${id} and  day(fecha_registro)= ${dia} and month(fecha_registro)= ${mes} and year(fecha_registro)= ${anio}
+        group by fecha, registro.hora_inicio, registro.hora_final order by fecha asc`);
+
+    return res.json(arrRespuesta[0]);
+}
+
+
 // ==== Obtener el dia y el numero de horas [mayor a menor]
 export async function getDiasMayorUso(req: Request, res: Response): Promise<Response> {
 
