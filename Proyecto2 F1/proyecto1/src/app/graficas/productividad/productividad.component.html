@@ -7,7 +7,24 @@
         <div class="col">
             <div class="card">
                 <div class="card-body">
-                    <h1>Grafica1</h1>
+                    <h3>Tareas realizadas</h3>
+                    <hr>
+                    <table class="table mb-5">
+                        <!-- encabezado de la tabla -->
+                        <thead>
+                            <tr class="table-primary">
+                                <th scope="col">Tarea</th>
+                                <th scope="col">Frecuencia de uso</th>
+                            </tr>
+                        </thead>
+                        <!-- consumir data que viene de la base de datos -->
+                        <tbody class="table table-light table-striped">
+                            <!-- <tr *ngFor="let item of historialUso">
+                                <td>{{item.fecha | date }}</td>
+                                <td>{{item.hora_final}}</td>
+                            </tr>  -->
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
@@ -15,7 +32,25 @@
         <div class="col">
             <div class="card">
                 <div class="card-body">
-                    <h1>Grafica2</h1>
+                    <h3>Frecuencia de tareas por fecha</h3>
+                    <hr>
+                    <table class="table mb-5">
+                        <!-- encabezado de la tabla -->
+                        <thead>
+                            <tr class="table-primary">
+                                <th scope="col">Tarea</th>
+                                <th scope="col">Fecha</th>
+                                <th scope="col">Frecuencia de uso</th>
+                            </tr>
+                        </thead>
+                        <!-- consumir data que viene de la base de datos -->
+                        <tbody class="table table-light table-striped">
+                            <!-- <tr *ngFor="let item of historialUso">
+                                <td>{{item.fecha | date }}</td>
+                                <td>{{item.hora_final}}</td>
+                            </tr>  -->
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
@@ -23,7 +58,25 @@
         <div class="col">
             <div class="card">
                 <div class="card-body">
-                    <h1>Grafica3</h1>
+                    <h3>Tareas por fecha</h3>
+                    <hr>
+                    <table class="table mb-5">
+                        <!-- encabezado de la tabla -->
+                        <thead>
+                            <tr class="table-primary">
+                                <th scope="col">Tarea</th>
+                                <th scope="col">Fecha</th>
+                                <th scope="col">Horas de uso</th>
+                            </tr>
+                        </thead>
+                        <!-- consumir data que viene de la base de datos -->
+                        <tbody class="table table-light table-striped">
+                            <!-- <tr *ngFor="let item of historialUso">
+                                <td>{{item.fecha | date }}</td>
+                                <td>{{item.hora_final}}</td>
+                            </tr>  -->
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
@@ -33,7 +86,24 @@
         <div class="col">
             <div class="card">
                 <div class="card-body">
-                    <h1>Grafica4</h1>
+                    <h3>Grafica de Tareas realizadas</h3>
+                    <div>
+                        <div>
+                          <div class="chart">
+                            <canvas baseChart
+                              [data]="pieChartData"
+                              [labels]="pieChartLabels"
+                              [chartType]="pieChartType"
+                              [options]="pieChartOptions"
+                              [colors]="pieChartColors"
+                              [legend]="pieChartLegend">
+                            </canvas>
+                          </div>
+                        </div>
+                      </div>
+                      <div>
+
+                      </div>
                 </div>
             </div>
         </div>
@@ -41,7 +111,20 @@
         <div class="col">
             <div class="card">
                 <div class="card-body">
-                    <h1>Grafica5</h1>
+                    <h3>Grafica de Frecuencia de tareas (barras)</h3>
+                    <div>
+                        <div>
+                          <div style="display: block">
+                            <canvas baseChart
+                              [datasets]="barChartData"
+                              [labels]="barChartLabels"
+                              [options]="barChartOptions"
+                              [legend]="barChartLegend"
+                              [chartType]="barChartType">
+                            </canvas>
+                          </div>
+                        </div>
+                      </div>
                 </div>
             </div>
         </div>
@@ -49,7 +132,18 @@
         <div class="col">
             <div class="card">
                 <div class="card-body">
-                    <h1>Grafica6</h1>
+                    <h3>Grafica de Tareas por fecha</h3>
+                    <div>
+                        <div>
+                        <div style="display: block">
+                            <canvas baseChart
+                            [data]="doughnutChartData"
+                              [labels]="doughnutChartLabels"
+                              [chartType]="doughnutChartType">
+                            </canvas>
+                          </div>
+                        </div>
+                      </div>
                 </div>
             </div>
         </div>

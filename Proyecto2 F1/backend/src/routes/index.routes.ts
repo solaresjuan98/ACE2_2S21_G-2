@@ -76,8 +76,13 @@ router.route('/setSilla/:id_usuario').get(setearSilla);
 // Conexión Arduino
 port.on("open", () => {
 
+    try {
+        console.log("se abrió la comunicación :v")
+    } catch (error) {
+        console.log('Error');
+    }
 
-    console.log("se abrió la comunicación :v")
+    
 })
 //router.route('/getInformacionCruda').get(parser.on("data", (data: any) => {}));
 let dato = ""

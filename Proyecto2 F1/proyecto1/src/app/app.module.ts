@@ -27,6 +27,7 @@ import { HorarioUsoComponent } from './graficas/horario-uso/horario-uso.componen
 import { TiempoUsoComponent } from './graficas/tiempo-uso/tiempo-uso.component';
 import { RegistroPesoComponent } from './graficas/registro-peso/registro-peso.component';
 import { ProductividadComponent } from './graficas/productividad/productividad.component';
+import { TareaComponent } from './components/tarea/tarea.component';
 
 
 @NgModule({
@@ -46,7 +47,8 @@ import { ProductividadComponent } from './graficas/productividad/productividad.c
     HorarioUsoComponent,
     TiempoUsoComponent,
     RegistroPesoComponent,
-    ProductividadComponent
+    ProductividadComponent,
+    TareaComponent
   ],
   imports: [
     BrowserModule,
