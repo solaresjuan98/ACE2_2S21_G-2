@@ -1,11 +1,12 @@
 #include "HX711.h"
-
+#include <SoftwareSerial.h> // libreria que permite establecer pines digitales
 #define DEBUG_HX711
 
 const int trigPin = 13;  //Trig Ultrasons -> pin 13
 const int echoPin = 12;  //Echo Ultrasons -> pin 12
 long duracion, distancia;
 int val;
+SoftwareSerial miBT(10, 11);
 
 // Parámetro para calibrar el peso y el sensor
 #define CALIBRACION 27600.0
@@ -20,7 +21,7 @@ float peso = 0;
 String sentado = "";
 
 void setup() {
-
+miBT.begin(38400);
 #ifdef DEBUG_HX711
   // Iniciar comunicación serie
   Serial.begin(9600);
@@ -39,7 +40,7 @@ void setup() {
 
   pinMode(trigPin, OUTPUT);  //Trig
   pinMode(echoPin, INPUT);   //Echo
-
+  delay(50);
   
 }
 
@@ -63,7 +64,7 @@ void UltraSonico() {
   if ((distancia >=40 && distancia <= 900)) {
 
     sentado = "false";
-    Serial.println( json_converter(peso,sentado));
+    miBT.println( json_converter(peso,sentado));
     
   }
   else {
