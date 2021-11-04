@@ -6,7 +6,7 @@ const router = Router();
 // Arduino
 const SerialPort = require('serialport');
 const ReadLine = require('@serialport/parser-readline')
-const port = new SerialPort("COM3", { baudRate: 9600 });
+const port = new SerialPort("COM4", { baudRate: 9600 });
 const parser = port.pipe(new ReadLine({ delimiter: "\n" }));
 
 // no es necesario
@@ -161,8 +161,9 @@ parser.on("data", (data: any) => {
             bandera1 = true
             //AQUI ES DONDE SE HACE LA INSERCIÓN
             let id_silla = getSillaActual();
-
+            console.log( Promedio(pesos));
             if(id_silla !== -1){
+                
                 insertData(fecha, inicio, final, Promedio(pesos), id_silla)
             }else {
                 console.log('No se pudo ingresar el registro porque no hay silla registrada')
