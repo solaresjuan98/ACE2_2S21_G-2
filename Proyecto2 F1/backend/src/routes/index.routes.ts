@@ -6,7 +6,7 @@ const router = Router();
 // Arduino
 const SerialPort = require('serialport');
 const ReadLine = require('@serialport/parser-readline')
-const port = new SerialPort("COM6", { baudRate: 9600 });
+const port = new SerialPort("COM3", { baudRate: 9600 });
 const parser = port.pipe(new ReadLine({ delimiter: "\n" }));
 
 // no es necesario
@@ -34,7 +34,10 @@ import {
     getSillaActual,
     getHistorialUsoPorSemana,
     getHistorialUsoPorMesAnio,
-    getHistorialUsoPorDiaMesAnio
+    getHistorialUsoPorDiaMesAnio,
+    tareasRealizadas,
+    tareasRealizadasGrafica,
+    tareasRealizadasPorFecha
 } from '../controllers/index.controllers'
 
 router.route('/').get(getTest);
@@ -84,6 +87,13 @@ router.route('/registrarSilla').post(registrarSilla);
 router.route('/usuario').post(insertUsuario);
 
 router.route('/setSilla/:id_usuario').get(setearSilla);
+
+// PRODUCTIVIDAD 
+router.route('/productividad/tareas/:id_silla').get(tareasRealizadas); // Obtener las tareas que el usuario hizo
+router.route('/productividad/tareasRealizadasGrafica/:id_silla').get(tareasRealizadasGrafica) // Grafica 1 
+router.route('/productividad/tareasRealizadasPorFechaGrafica/:id_silla').get(tareasRealizadasPorFecha) // Grafica 1 
+
+
 // Conexión Arduino
 port.on("open", () => {
 

@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ChartDataSets, ChartOptions, ChartType } from 'chart.js';
 import { Label, MultiDataSet } from 'ng2-charts';
-
+import { SillaService } from '../../services/silla.service';
+import { ProductividadService } from '../../services/productividad.service';
+import { SillaUsuario } from 'src/interfaces/Interfaces';
+import { UserService } from '../../services/user.service';
 @Component({
   selector: 'app-productividad',
   templateUrl: './productividad.component.html',
@@ -9,6 +12,11 @@ import { Label, MultiDataSet } from 'ng2-charts';
   ]
 })
 export class ProductividadComponent implements OnInit {
+
+  correo = '';
+  id_usuario = 0;
+  datos: SillaUsuario[] = [];
+  id_silla = 0;
 
   // Pie
   public pieChartOptions: ChartOptions = {
@@ -25,8 +33,8 @@ export class ProductividadComponent implements OnInit {
       },
     }
   };
-  public pieChartLabels: Label[] = [['Download', 'Sales'], ['In', 'Store', 'Sales'], 'Mail Sales'];
-  public pieChartData: number[] = [300, 500, 100];
+  public pieChartLabels: Label[] = ['-'];
+  public pieChartData: number[] = [0];
   public pieChartType: ChartType = 'pie';
   public pieChartLegend = true;
   //public pieChartPlugins = [pluginDataLabels];
@@ -64,10 +72,23 @@ export class ProductividadComponent implements OnInit {
   public doughnutChartType: ChartType = 'doughnut';
 
 
-  constructor() { }
+  constructor(private userService: UserService, private sillaService: SillaService, private productividadService: ProductividadService) { }
 
   ngOnInit(): void {
-  
+
+    this.correo = localStorage.getItem('correo');
+
+    // Obtener id_usuario
+    this.userService.getIdUsuario(this.correo).subscribe(data => {
+      this.id_usuario = data[0].id_usuario;
+      console.log(this.id_usuario)
+
+      // Obtener las sillas
+      this.sillaService.obtenerSillasporId(this.id_usuario).subscribe(data => {
+        this.datos = data;
+      })
+    });
+
   }
 
   // events
@@ -77,6 +98,34 @@ export class ProductividadComponent implements OnInit {
 
   public chartHovered({ event, active }: { event: MouseEvent, active: {}[] }): void {
     console.log(event, active);
+  }
+
+  seleccionarSilla() {
+
+    this.id_silla = parseInt(((document.getElementById("silla") as HTMLInputElement).value));
+
+    if(this.id_silla === 0 || this.id_silla === NaN){
+
+      alert("Selecciona una silla")
+    }
+    else {
+
+      // Generar el reporte primero
+
+      this.productividadService.obtenerGraficaTareasRealizadas(this.id_silla)
+        .subscribe(({labels, values}) => {
+
+
+          this.pieChartLabels = labels;
+          this.pieChartData = values;
+     
+
+
+        })
+
+
+    }
+
   }
 
 

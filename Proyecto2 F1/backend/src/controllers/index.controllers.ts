@@ -545,3 +545,92 @@ export function getSillaActual(){
 
     return idSillaGlobal;
 }
+
+
+
+
+
+// ========== REPORTES DE PRODUCTIVIDAD ==========
+// Tareas
+export async function tareasRealizadas(req: Request, res: Response) {
+
+    const id = req.params.id_silla;
+    const connection = await connect();
+    const arrResponse = await connection.query(`
+    select distinct tarea
+    from flowtime
+    where id_silla = ${id}
+    `);
+
+    return res.json(arrResponse[0]);
+
+}
+
+
+// Grafica 1
+export async function tareasRealizadasGrafica(req: Request, res: Response) {
+
+    let grafica: any = {
+        datos: {}
+    }
+
+    const id = req.params.id_silla;
+    const connection = await connect();
+    const arrResponse = await connection.query(`
+    select tarea, count(*) veces_total
+    from flowtime
+    where id_silla = ${id}
+    group by tarea
+    `);
+
+    const arr = JSON.stringify(arrResponse[0]);
+    const arregloParseado: any[] = JSON.parse(arr);
+
+    for (let i = 0; i < arregloParseado.length; i++) {
+        const element = arregloParseado[i];
+        //console.log(element.fecha);
+        //console.log(element.horas);
+
+        let nombreObj = element.tarea;
+        grafica.datos[nombreObj] = element.veces_total;
+
+    }
+    console.log(arr);
+    return res.json(grafica.datos)
+}
+
+// Grafica 2
+export async function tareasRealizadasPorFecha(req: Request, res: Response) {
+
+    let grafica: any = {
+        datos: {}
+    }
+
+    const id = req.params.id_silla;
+    const connection = await connect();
+    const arrResponse = await connection.query(`
+    select tarea, fecha_registro, count(*) veces
+    from flowtime
+    where id_silla = ${id}
+    group by tarea, fecha_registro
+    order by fecha_registro
+    `);
+
+
+    const arr = JSON.stringify(arrResponse[0]);
+    const arregloParseado: any[] = JSON.parse(arr);
+
+    for (let i = 0; i < arregloParseado.length; i++) {
+        const element = arregloParseado[i];
+        //console.log(element.fecha);
+        //console.log(element.horas);
+
+        let nombreObj = element.tarea;
+        grafica.datos[nombreObj] = element.veces_total;
+        grafica.datos[nombreObj] = element.fecha_registro;
+    }
+    //console.log(arr);
+    return res.json(arrResponse[0])
+
+}
+

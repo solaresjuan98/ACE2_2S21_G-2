@@ -9,7 +9,7 @@
         <form class="mb-3">
             <select class="form-select mr-5" style="width: 10rem;" id="ubicacion" >
 
-                <option selected>--Ubicación--</option>
+                <option selected>Ubicación</option>
                
                 <option *ngFor="let item of datos" value="{{item.id_silla}}">{{item.nombre_silla}} | {{item.ubicacion_silla}}</option>
             </select>

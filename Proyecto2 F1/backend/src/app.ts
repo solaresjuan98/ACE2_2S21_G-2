@@ -1,10 +1,9 @@
 // import express
-import express, { Application } from "express";
+import express, { Application, RequestHandler } from "express";
 import morgan from "morgan";
 
 // Routes
 import indexRoutes from "./routes/index.routes";
-// import postRoutes from "./routes/post.routes";
 
 export class App {
   private app: Application;
@@ -17,8 +16,8 @@ export class App {
   }
 
   middlewares() {
-    this.app.use(morgan("dev"));
-    this.app.use(express.json());
+    this.app.use(morgan("dev") as RequestHandler);
+    this.app.use(express.json() as RequestHandler);
     this.app.use((req, res, next) => {
       res.header('Access-Control-Allow-Origin', '*');
       res.header('Access-Control-Allow-Headers', 'Authorization, X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Allow-Request-Method');
