@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ChartDataSets, ChartOptions, ChartType } from 'chart.js';
-import { Label, MultiDataSet } from 'ng2-charts';
+import { Color, Label, MultiDataSet } from 'ng2-charts';
 import { SillaService } from '../../services/silla.service';
 import { ProductividadService } from '../../services/productividad.service';
 import { SillaUsuario } from 'src/interfaces/Interfaces';
@@ -63,14 +63,27 @@ export class ProductividadComponent implements OnInit {
   public barChartLegend = true;
 
   public barChartData: ChartDataSets[] = [
-    { data: [65, 59, 80, 81, 56, 55, 40], label: 'Series A' }
+    { data: [], label: 'Frecuencia' }
   ];
 
+
+  public colors: Color[] = [
+    {
+      backgroundColor: [
+        '#0075ED',
+        '#0075ED',
+        '#0075ED',
+        '#0075ED',
+        '#0075ED',
+        '#0075ED',
+        '#0075ED'
+      ]
+    }
+  ]
+
   // DONA
-  public doughnutChartLabels: Label[] = ['Download Sales', 'In-Store Sales', 'Mail-Order Sales'];
-  public doughnutChartData: MultiDataSet = [
-    [350, 450, 100]
-  ];
+  public doughnutChartLabels: Label[] = [];
+  public doughnutChartData: MultiDataSet = [[]];
   public doughnutChartType: ChartType = 'doughnut';
 
 
@@ -111,14 +124,28 @@ export class ProductividadComponent implements OnInit {
       alert("Selecciona una silla")
     }
     else {
-
-      // Generar el reporte primero
+      let numberArray: any[] = [];
+      // Generar el reporte de pie
       this.productividadService.obtenerGraficaTareasRealizadas(this.id_silla)
         .subscribe(({ labels, values }) => {
           this.pieChartLabels = labels;
           this.pieChartData = values;
         })
 
+      // Generar el reporte de dona
+      this.productividadService.obtenerHorasPorTarea(this.id_silla)
+        .subscribe(({ labels, values }) => {
+          this.doughnutChartLabels = labels;
+          this.doughnutChartData[0] = values;
+
+          console.log(this.doughnutChartData[0])
+          this.doughnutChartData[0].map(number => {
+            console.log(number)
+            numberArray.push(number);
+          })
+
+          this.doughnutChartData = numberArray;
+        });
       this.productividadService.obtenerTareas(this.id_silla).subscribe(data => {
         this.tareas = data;
       })
@@ -138,6 +165,9 @@ export class ProductividadComponent implements OnInit {
     }
     else {
 
+      // Limpiar grafica antes de obtener los datos 
+      this.limpiarGraficaBarras();
+
       this.productividadService.obtenerGraficaPorTarea(this.id_silla, tarea)
         .subscribe(({ labels, values }) => {
           for (let i = 0; i < labels.length; i++) {
@@ -155,6 +185,12 @@ export class ProductividadComponent implements OnInit {
         })
     }
 
+  }
+
+
+  limpiarGraficaBarras() {
+    this.barChartData[0].data = [];
+    this.barChartLabels = [];
   }
 
 }

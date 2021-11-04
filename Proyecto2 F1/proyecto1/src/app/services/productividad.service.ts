@@ -21,6 +21,7 @@ export class ProductividadService {
   }
   
 
+  // Grafica 1
   obtenerGraficaTareasRealizadas(id_silla: number){
     return this.http.get(`http://localhost:3000/productividad/tareasRealizadasGrafica/${id_silla}`)
       .pipe(
@@ -32,8 +33,21 @@ export class ProductividadService {
       )
   }
 
+  // Grafica 2
   obtenerGraficaPorTarea(id_silla: number, tarea: string) {
     return this.http.get(`http://localhost:3000/productividad/tareasPorFechaGrafica/${id_silla}/${tarea}`)
+      .pipe(
+        map(data => {
+          const labels = Object.keys(data);
+          const values: number[] = Object.values(data);
+          return { labels, values }
+        })
+      )
+  }
+
+  // Grafica 3
+  obtenerHorasPorTarea(id_silla: number) {
+    return this.http.get(`http://localhost:3000/productividad/horasPorTarea/${id_silla}`)
       .pipe(
         map(data => {
           const labels = Object.keys(data);

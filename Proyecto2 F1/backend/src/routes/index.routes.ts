@@ -37,7 +37,8 @@ import {
     getHistorialUsoPorDiaMesAnio,
     tareasRealizadas,
     tareasRealizadasGrafica,
-    tareasRealizadasPorFecha
+    tareasRealizadasPorFecha,
+    horasPorTarea
 } from '../controllers/index.controllers'
 
 router.route('/').get(getTest);
@@ -92,6 +93,7 @@ router.route('/setSilla/:id_usuario').get(setearSilla);
 router.route('/productividad/tareas/:id_silla').get(tareasRealizadas); // Obtener las tareas que el usuario hizo
 router.route('/productividad/tareasRealizadasGrafica/:id_silla').get(tareasRealizadasGrafica) // Grafica 1 
 router.route('/productividad/tareasPorFechaGrafica/:id_silla/:tarea').get(tareasRealizadasPorFecha) // Grafica 1 
+router.route('/productividad/horasPorTarea/:id_silla').get(horasPorTarea) // Grafica 3 
 
 
 // Conexión Arduino
