@@ -606,15 +606,20 @@ export async function tareasRealizadasPorFecha(req: Request, res: Response) {
         datos: {}
     }
 
+    console.log(req.params);
     const id = req.params.id_silla;
+    const tarea_ = req.params.tarea;
+    console.log(tarea_);
     const connection = await connect();
     const arrResponse = await connection.query(`
-    select tarea, fecha_registro, count(*) veces
+    select  fecha_registro, count(*) veces
     from flowtime
     where id_silla = ${id}
+    and tarea = '${tarea_}'
     group by tarea, fecha_registro
     order by fecha_registro
     `);
+;
 
 
     const arr = JSON.stringify(arrResponse[0]);
@@ -625,12 +630,11 @@ export async function tareasRealizadasPorFecha(req: Request, res: Response) {
         //console.log(element.fecha);
         //console.log(element.horas);
 
-        let nombreObj = element.tarea;
-        grafica.datos[nombreObj] = element.veces_total;
-        grafica.datos[nombreObj] = element.fecha_registro;
+        let nombreObj = element.fecha_registro;
+        grafica.datos[nombreObj] = element.veces;
     }
-    //console.log(arr);
-    return res.json(arrResponse[0])
 
+
+    return res.json(grafica.datos);
 }
 

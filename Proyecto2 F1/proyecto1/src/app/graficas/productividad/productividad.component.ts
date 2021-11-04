@@ -5,6 +5,7 @@ import { SillaService } from '../../services/silla.service';
 import { ProductividadService } from '../../services/productividad.service';
 import { SillaUsuario } from 'src/interfaces/Interfaces';
 import { UserService } from '../../services/user.service';
+import { Tarea } from '../../../interfaces/Interfaces';
 @Component({
   selector: 'app-productividad',
   templateUrl: './productividad.component.html',
@@ -17,6 +18,7 @@ export class ProductividadComponent implements OnInit {
   id_usuario = 0;
   datos: SillaUsuario[] = [];
   id_silla = 0;
+  tareas: Tarea[] = [];
 
   // Pie
   public pieChartOptions: ChartOptions = {
@@ -56,7 +58,7 @@ export class ProductividadComponent implements OnInit {
       }
     }
   };
-  public barChartLabels: Label[] = ['2006', '2007', '2008', '2009', '2010', '2011', '2012'];
+  public barChartLabels: Label[] = [];
   public barChartType: ChartType = 'bar';
   public barChartLegend = true;
 
@@ -104,29 +106,55 @@ export class ProductividadComponent implements OnInit {
 
     this.id_silla = parseInt(((document.getElementById("silla") as HTMLInputElement).value));
 
-    if(this.id_silla === 0 || this.id_silla === NaN){
+    if (this.id_silla === 0 || this.id_silla === NaN) {
 
       alert("Selecciona una silla")
     }
     else {
 
       // Generar el reporte primero
-
       this.productividadService.obtenerGraficaTareasRealizadas(this.id_silla)
-        .subscribe(({labels, values}) => {
-
-
+        .subscribe(({ labels, values }) => {
           this.pieChartLabels = labels;
           this.pieChartData = values;
-     
-
-
         })
 
-
+      this.productividadService.obtenerTareas(this.id_silla).subscribe(data => {
+        this.tareas = data;
+      })
     }
 
   }
 
+
+  obtenerVecesPorTarea() {
+
+    let tarea = (document.getElementById("tarea") as HTMLInputElement).value;
+
+    console.log(tarea);
+
+    if (tarea === 'Elegir tarea...') {
+      alert('Tarea no valida')
+    }
+    else {
+
+      this.productividadService.obtenerGraficaPorTarea(this.id_silla, tarea)
+        .subscribe(({ labels, values }) => {
+          for (let i = 0; i < labels.length; i++) {
+            let date = new Date(labels[i]);
+            let currentMonth = date.getMonth() + 1;
+
+            this.barChartLabels.push(date.getDate() + "/" + currentMonth + "/" + date.getFullYear())
+          }
+
+          //this.barChartLabels = labels;
+          this.barChartData[0].data = values;
+
+          this.barChartLabels[this.barChartLabels.length] = '';
+          this.barChartData[0].data[this.barChartData[0].data.length] = 0;
+        })
+    }
+
+  }
 
 }

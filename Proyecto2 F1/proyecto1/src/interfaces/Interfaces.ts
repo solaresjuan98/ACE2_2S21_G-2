@@ -15,3 +15,7 @@ export interface SillaUsuario {
     nombre_silla: number;
     ubicacion_silla: number;
 }
+
+export interface Tarea {
+    tarea: string;
+}

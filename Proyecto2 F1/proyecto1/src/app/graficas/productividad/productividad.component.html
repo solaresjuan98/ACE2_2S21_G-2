@@ -137,6 +137,21 @@
             <div class="card">
                 <div class="card-body">
                     <h3>Grafica de Frecuencia de tareas (barras)</h3>
+                    <div class="form-group">
+                        <select class="form-select mr-5" style="width: 10rem;" id="tarea" >
+                            <option selected>Elegir tarea...</option>
+                            <option *ngFor="let tarea of tareas" value="{{tarea.tarea}}">{{tarea.tarea}}</option>
+                        
+                        </select>
+                        <select class="form-select mr-5" style="width: 10rem;" id="tiempo" >
+                            <option selected>Periodo de tiempo</option>
+                            <option *ngFor="let item of datos" value="{{item.id_silla}}">{{item.nombre_silla}} | {{item.ubicacion_silla}}</option>
+                        
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <button class="btn btn-primary btn-sm" (click)="obtenerVecesPorTarea()"> Obtener datos</button>
+                    </div>
                     <div>
                         <div>
                           <div style="display: block">
