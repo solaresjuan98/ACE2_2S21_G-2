@@ -24,19 +24,19 @@
         <form class="alcentro mb-5">
             <div>
                 <label class="visually-hidden" for="autoSizingInput">Tarea</label>
-                <input type="text" class="form-control" id="nombreTarea">
+                <input type="text" class="form-control" id="nombreTarea" [ngModelOptions]="{standalone: true}" [(ngModel)]="descripcion_tarea" >
             </div>
         </form>
 
         <form class="alcentro mb-5">
             <div>
                 <label class="visually-hidden" for="autoSizingInput">Duración de la tarea (minutos)</label>
-                <input type="number" class="form-control" id="duracion">
+                <input type="number" class="form-control" id="duracion" [ngModelOptions]="{standalone: true}" [(ngModel)]="duracion">
             </div>
         </form>
 
         <div class="mb-5">
-            <button type="submit" class="btn btn-primary" style="width: 12rem;">Comenzar</button>
+            <button type="submit" class="btn btn-primary" style="width: 12rem;" (click)="registrarTarea()">Comenzar</button>
         </div>
     </div>
 </div>

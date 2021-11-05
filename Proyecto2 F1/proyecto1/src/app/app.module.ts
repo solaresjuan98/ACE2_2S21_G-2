@@ -10,6 +10,7 @@ import { NgxSpinnerModule } from "ngx-spinner";
 import { SpinnerComponent } from './components/spinner/spinner.component'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {HttpClientModule} from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
 
 import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 import { AngularFireModule } from '@angular/fire/compat/'
@@ -54,6 +55,7 @@ import { TareaComponent } from './components/tarea/tarea.component';
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
+    FormsModule,
     NgxSpinnerModule,
     BrowserAnimationsModule,
     AngularFireAuthModule,

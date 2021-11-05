@@ -41,7 +41,8 @@ import {
     horasPorTarea,
     tarearRealizadasTabla,
     tareasRealizadasPorFechaTabla,
-    horasPorTareaTabla
+    horasPorTareaTabla,
+    registrarTarea
 } from '../controllers/index.controllers'
 
 router.route('/').get(getTest);
@@ -91,6 +92,7 @@ router.route('/registrarSilla').post(registrarSilla);
 router.route('/usuario').post(insertUsuario);
 
 router.route('/setSilla/:id_usuario').get(setearSilla);
+router.route('/tarea').post(registrarTarea);
 
 // PRODUCTIVIDAD 
 router.route('/productividad/tareas/:id_silla').get(tareasRealizadas); // Obtener las tareas que el usuario hizo

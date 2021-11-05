@@ -722,3 +722,17 @@ export async function horasPorTarea(req: Request, res: Response) {
     console.log(arr);
     return res.json(grafica.datos)
 }
+
+export async function registrarTarea(req: Request, res: Response) {
+    try {
+        const connection = await connect();
+        await connection.query(`insert into flowtime values (null, ${req.body.id_silla}, '${req.body.fecha_registro}', '${req.body.descripcion_tarea}',
+        '${req.body.hora_inicio}', '${req.body.hora_final}', ${req.body.tiempo_descanso});`)
+        res.json({
+            message: 'Tarea registrada'
+        })
+    } catch (error) {
+        console.log(error)
+        res.sendStatus(404);
+    }
+}
