@@ -67,6 +67,16 @@ export class ProductividadService {
       )
   }
 
+  // Tabla 3
+  obtenerHorasPorTareaTabla(id_silla: number) {
+    return this.http.get<Tarea[]>(`http://localhost:3000/productividad/horasPorTareaTabla/${id_silla}`)
+    .pipe(
+      map(data => {
+        return data;
+      })
+    )
+  }
+
   // Grafica 3
   obtenerHorasPorTarea(id_silla: number) {
     return this.http.get(`http://localhost:3000/productividad/horasPorTarea/${id_silla}`)

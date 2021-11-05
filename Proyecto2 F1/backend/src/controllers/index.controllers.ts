@@ -670,6 +670,25 @@ export async function tareasRealizadasPorFecha(req: Request, res: Response) {
     return res.json(grafica.datos);
 }
 
+// Tabla 3
+export async function horasPorTareaTabla(req:Request, res: Response) {
+    
+    const id = req.params.id_silla;
+    const connection = await connect();
+    const arrResponse = await connection.query(`
+    select tarea, sum(horas) total_horas
+    from (
+             select tarea, (timestampdiff(second, hora_inicio, hora_final) / 3600) horas
+             from flowtime
+             where id_silla = ${id}
+         ) tabla1
+    group by tarea
+    `);
+
+    return res.json(arrResponse[0]);
+}
+
+
 // Grafica 3
 export async function horasPorTarea(req: Request, res: Response) {
     let grafica: any = {

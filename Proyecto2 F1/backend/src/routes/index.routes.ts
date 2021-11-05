@@ -40,7 +40,8 @@ import {
     tareasRealizadasPorFecha,
     horasPorTarea,
     tarearRealizadasTabla,
-    tareasRealizadasPorFechaTabla
+    tareasRealizadasPorFechaTabla,
+    horasPorTareaTabla
 } from '../controllers/index.controllers'
 
 router.route('/').get(getTest);
@@ -97,6 +98,7 @@ router.route('/productividad/tareasRealizadasTabla/:id_silla').get(tarearRealiza
 router.route('/productividad/tareasRealizadasGrafica/:id_silla').get(tareasRealizadasGrafica) // Grafica 1 
 router.route('/productividad/tareasPorFechaTabla/:id_silla/:tarea').get(tareasRealizadasPorFechaTabla) // Tabla 2
 router.route('/productividad/tareasPorFechaGrafica/:id_silla/:tarea').get(tareasRealizadasPorFecha) // Grafica 2 
+router.route('/productividad/horasPorTareaTabla/:id_silla').get(horasPorTareaTabla) // Tabla 3 
 router.route('/productividad/horasPorTarea/:id_silla').get(horasPorTarea) // Grafica 3 
 
 

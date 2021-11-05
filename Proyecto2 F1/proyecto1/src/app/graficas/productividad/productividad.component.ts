@@ -21,6 +21,7 @@ export class ProductividadComponent implements OnInit {
   tareas: Tarea[] = [];
   tareas_realizadas: Tarea[] = [];
   tareas_fecha: Tarea[] = [];
+  tarea_horas_totales: Tarea[] = [];
   tarea = "";
 
   // Pie
@@ -156,8 +157,15 @@ export class ProductividadComponent implements OnInit {
 
           this.doughnutChartData = numberArray;
         });
+
+      // Obtener tareas
       this.productividadService.obtenerTareas(this.id_silla).subscribe(data => {
         this.tareas = data;
+      })
+
+      // Generar Tabla 3
+      this.productividadService.obtenerHorasPorTareaTabla(this.id_silla).subscribe(data => {
+        this.tarea_horas_totales = data;
       })
     }
 
@@ -168,7 +176,7 @@ export class ProductividadComponent implements OnInit {
 
     //let tarea = (document.getElementById("tarea") as HTMLInputElement).value;
     this.tarea = (document.getElementById("tarea") as HTMLInputElement).value;
-    
+
     if (this.tarea === 'Elegir tarea...') {
       alert('Tarea no valida')
     }

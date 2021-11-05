@@ -46,7 +46,7 @@
                         <tbody class="table table-light table-striped">
                             <tr *ngFor="let tarea of tareas_realizadas">
                                 <td>{{tarea.tarea}}</td>
-                                <td>{{tarea.veces_total}}</td>
+                                <td>{{tarea.veces_total}} veces</td>
                             </tr> 
                         </tbody>
                     </table>
@@ -66,11 +66,11 @@
                             <option *ngFor="let tarea of tareas" value="{{tarea.tarea}}">{{tarea.tarea}}</option>
                         
                         </select>
-                        <select class="form-select mr-5" style="width: 10rem;" id="tiempo" >
+                        <!-- <select class="form-select mr-5" style="width: 10rem;" id="tiempo" >
                             <option selected>Periodo de tiempo</option>
                             <option *ngFor="let item of datos" value="{{item.id_silla}}">{{item.nombre_silla}} | {{item.ubicacion_silla}}</option>
                         
-                        </select>
+                        </select> -->
                     </div>
                     
                     <div class="form-group">
@@ -89,7 +89,7 @@
                         <tbody class="table table-light table-striped">
                             <tr *ngFor="let item of tareas_fecha">
                                 <td>{{item.fecha_registro | date }}</td>
-                                <td>{{item.veces_total}}</td>
+                                <td>{{item.veces_total}} veces</td>
                             </tr> 
                         </tbody>
                     </table>
@@ -107,16 +107,15 @@
                         <thead>
                             <tr class="table-primary">
                                 <th scope="col">Tarea</th>
-                                <th scope="col">Fecha</th>
                                 <th scope="col">Horas de uso</th>
                             </tr>
                         </thead>
                         <!-- consumir data que viene de la base de datos -->
                         <tbody class="table table-light table-striped">
-                            <!-- <tr *ngFor="let item of historialUso">
-                                <td>{{item.fecha | date }}</td>
-                                <td>{{item.hora_final}}</td>
-                            </tr>  -->
+                            <tr *ngFor="let item of tarea_horas_totales">
+                                <td>{{item.tarea }}</td>
+                                <td>{{item.total_horas}} horas</td>
+                            </tr> 
                         </tbody>
                     </table>
                 </div>
