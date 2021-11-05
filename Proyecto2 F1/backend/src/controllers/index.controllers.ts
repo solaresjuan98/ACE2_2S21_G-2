@@ -143,7 +143,7 @@ export async function getTiempoPromedio(req: Request, res: Response): Promise<Re
 export async function getUltimoRegistro(req: Request, res: Response): Promise<Response> {
 
     const id = req.params.id_usuario;
-    
+
     //const id_usuario
     const connection = await connect();
     const arrRespuesta = await connection.query("select * \
@@ -200,7 +200,7 @@ export async function getHistorialUsoPorMesAnio(req: Request, res: Response): Pr
 
     const id = req.params.id_usuario;
     const mes = req.params.no_mes;
-    const anio= req.params.no_anio;
+    const anio = req.params.no_anio;
     //const id_usuario
     const connection = await connect();
     const arrRespuesta = await connection.query(`select date(fecha_registro) as fecha, time(hora_inicio) as hora_inicio, time(hora_final) as hora_final 
@@ -218,9 +218,9 @@ export async function getHistorialUsoPorDiaMesAnio(req: Request, res: Response):
 
 
     const id = req.params.id_usuario;
-    const dia= req.params.no_dia;
+    const dia = req.params.no_dia;
     const mes = req.params.no_mes;
-    const anio= req.params.no_anio;
+    const anio = req.params.no_anio;
     //const id_usuario
     const connection = await connect();
     const arrRespuesta = await connection.query(`select date(fecha_registro) as fecha, time(hora_inicio) as hora_inicio, time(hora_final) as hora_final 
@@ -492,8 +492,8 @@ export async function registrarSilla(req: Request, res: Response) {
 }
 
 
-export async function getHorarioUso(req:Request, res: Response): Promise<Response> {
-    
+export async function getHorarioUso(req: Request, res: Response): Promise<Response> {
+
     let grafica: any = {
         datos: {}
     }
@@ -529,8 +529,8 @@ export async function getHorarioUso(req:Request, res: Response): Promise<Respons
 
 
 //  ========== SETEAR ID DE SILLA A USAR
-export async function setearSilla(req:Request, res: Response) {
-    
+export async function setearSilla(req: Request, res: Response) {
+
     const silla_seteada = req.params.id_usuario;
 
     //console.log(silla_seteada.id_silla);
@@ -541,7 +541,7 @@ export async function setearSilla(req:Request, res: Response) {
 }
 
 
-export function getSillaActual(){
+export function getSillaActual() {
 
     return idSillaGlobal;
 }
@@ -564,6 +564,22 @@ export async function tareasRealizadas(req: Request, res: Response) {
 
     return res.json(arrResponse[0]);
 
+}
+
+// Tabla 1 
+export async function tarearRealizadasTabla(req: Request, res: Response) {
+
+    const id = req.params.id_silla;
+    const connection = await connect();
+    const arrResponse = await connection.query(`
+    select tarea, count(*) veces_total
+    from flowtime
+    where id_silla = ${id}
+    group by tarea
+    `);
+
+
+    return res.json(arrResponse[0]);
 }
 
 
@@ -599,6 +615,24 @@ export async function tareasRealizadasGrafica(req: Request, res: Response) {
     return res.json(grafica.datos)
 }
 
+// Tabla 2
+export async function tareasRealizadasPorFechaTabla(req: Request, res: Response) {
+    const id = req.params.id_silla;
+    const tarea_ = req.params.tarea;
+    console.log(tarea_);
+    const connection = await connect();
+    const arrResponse = await connection.query(`
+    select  fecha_registro, count(*) veces_total
+        from flowtime
+        where id_silla = ${id}
+        and tarea = '${tarea_}'
+    group by tarea, fecha_registro
+    order by fecha_registro
+    `);
+
+    return res.json(arrResponse[0]);
+}
+
 // Grafica 2
 export async function tareasRealizadasPorFecha(req: Request, res: Response) {
 
@@ -619,8 +653,6 @@ export async function tareasRealizadasPorFecha(req: Request, res: Response) {
     group by tarea, fecha_registro
     order by fecha_registro
     `);
-;
-
 
     const arr = JSON.stringify(arrResponse[0]);
     const arregloParseado: any[] = JSON.parse(arr);
@@ -639,7 +671,7 @@ export async function tareasRealizadasPorFecha(req: Request, res: Response) {
 }
 
 // Grafica 3
-export async function horasPorTarea(req:Request, res: Response) {
+export async function horasPorTarea(req: Request, res: Response) {
     let grafica: any = {
         datos: {}
     }

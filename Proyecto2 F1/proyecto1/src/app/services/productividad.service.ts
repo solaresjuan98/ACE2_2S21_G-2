@@ -19,6 +19,17 @@ export class ProductividadService {
       })
     );
   }
+
+  // Tabla 1
+  obtenerTablaTareasRealizadas(id_silla: number){
+
+    return this.http.get<Tarea[]>(`http://localhost:3000/productividad/tareasRealizadasTabla/${id_silla}`)
+      .pipe(
+        map(data => {
+          return data;
+        })
+      )
+  }
   
 
   // Grafica 1
@@ -31,6 +42,17 @@ export class ProductividadService {
           return { labels, values }
         })
       )
+  }
+
+  // Tabla 2
+  obtenerTablaTareasRealizadasPorFecha(id_silla: number, tarea: string) {
+    return this.http.get<Tarea[]>(`http://localhost:3000/productividad/tareasPorFechaTabla/${id_silla}/${tarea}`)
+      .pipe(
+        map(data => {
+          return data;
+        })
+      )
+
   }
 
   // Grafica 2

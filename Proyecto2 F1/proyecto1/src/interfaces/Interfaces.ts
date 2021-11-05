@@ -18,4 +18,6 @@ export interface SillaUsuario {
 
 export interface Tarea {
     tarea: string;
+    veces_total?: number;
+    fecha_registro?: string;
 }

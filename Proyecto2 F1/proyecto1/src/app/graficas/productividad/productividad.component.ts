@@ -19,6 +19,9 @@ export class ProductividadComponent implements OnInit {
   datos: SillaUsuario[] = [];
   id_silla = 0;
   tareas: Tarea[] = [];
+  tareas_realizadas: Tarea[] = [];
+  tareas_fecha: Tarea[] = [];
+  tarea = "";
 
   // Pie
   public pieChartOptions: ChartOptions = {
@@ -125,6 +128,13 @@ export class ProductividadComponent implements OnInit {
     }
     else {
       let numberArray: any[] = [];
+
+      // Generar tabla 1
+      this.productividadService.obtenerTablaTareasRealizadas(this.id_silla)
+        .subscribe(data => {
+          this.tareas_realizadas = data;
+        })
+
       // Generar el reporte de pie
       this.productividadService.obtenerGraficaTareasRealizadas(this.id_silla)
         .subscribe(({ labels, values }) => {
@@ -156,11 +166,10 @@ export class ProductividadComponent implements OnInit {
 
   obtenerVecesPorTarea() {
 
-    let tarea = (document.getElementById("tarea") as HTMLInputElement).value;
-
-    console.log(tarea);
-
-    if (tarea === 'Elegir tarea...') {
+    //let tarea = (document.getElementById("tarea") as HTMLInputElement).value;
+    this.tarea = (document.getElementById("tarea") as HTMLInputElement).value;
+    
+    if (this.tarea === 'Elegir tarea...') {
       alert('Tarea no valida')
     }
     else {
@@ -168,7 +177,7 @@ export class ProductividadComponent implements OnInit {
       // Limpiar grafica antes de obtener los datos 
       this.limpiarGraficaBarras();
 
-      this.productividadService.obtenerGraficaPorTarea(this.id_silla, tarea)
+      this.productividadService.obtenerGraficaPorTarea(this.id_silla, this.tarea)
         .subscribe(({ labels, values }) => {
           for (let i = 0; i < labels.length; i++) {
             let date = new Date(labels[i]);
@@ -182,6 +191,12 @@ export class ProductividadComponent implements OnInit {
 
           this.barChartLabels[this.barChartLabels.length] = '';
           this.barChartData[0].data[this.barChartData[0].data.length] = 0;
+        })
+
+
+      this.productividadService.obtenerTablaTareasRealizadasPorFecha(this.id_silla, this.tarea)
+        .subscribe(data => {
+          this.tareas_fecha = data;
         })
     }
 
