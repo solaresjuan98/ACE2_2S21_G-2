@@ -76,24 +76,25 @@ export class TareaComponent implements OnInit {
       minutos = time.getMinutes() + this.duracion;
     }
     if (this.int(horas) < 10) {
-      this.hora_final = `${time.getFullYear()}-${time.getMonth()}-${time.getDay()} 0${this.int(horas)}:${this.int(minutos)}:00`
+      this.hora_final = `${time.getFullYear()}-${time.getMonth()+1}-${time.getDay()} 0${this.int(horas)}:${this.int(minutos)}:00`
       if (this.int(minutos) < 10) {
-        this.hora_final = `${time.getFullYear()}-${time.getMonth()}-${time.getDay()} 0${this.int(horas)}:0${this.int(minutos)}:00`
+        this.hora_final = `${time.getFullYear()}-${time.getMonth()+1}-${time.getDay()} 0${this.int(horas)}:0${this.int(minutos)}:00`
       }
     } else if (this.int(minutos) < 10) {
-      this.hora_final = `${time.getFullYear()}-${time.getMonth()}-${time.getDay()} ${this.int(horas)}:0${this.int(minutos)}:00`
+      this.hora_final = `${time.getFullYear()}-${time.getMonth()+1}-${time.getDay()} ${this.int(horas)}:0${this.int(minutos)}:00`
     }
     else {
-      this.hora_final = `${time.getFullYear()}-${time.getMonth()}-${time.getDay()} ${this.int(horas)}:${this.int(minutos)}:00`
+      this.hora_final = `${time.getFullYear()}-${time.getMonth()+1}-${time.getDay()} ${this.int(horas)}:${this.int(minutos)}:00`
     }
 
   }
 
   async getTimes() {
     let time = new Date();
+    console.log(time)
     time.getTime();
-    this.fecha_registro = `${time.getFullYear()}-${time.getMonth()}-${time.getDay()}`;
-    this.hora_inicio = `${time.getFullYear()}-${time.getMonth()}-${time.getDay()} ${time.getHours()}:${time.getMinutes()}:${time.getSeconds()}`
+    this.fecha_registro = `${time.getFullYear()}-${time.getMonth()+1}-${time.getDay()}`;
+    this.hora_inicio = `${time.getFullYear()}-${time.getMonth()+1}-${time.getDay()} ${time.getHours()}:${time.getMinutes()}:${time.getSeconds()}`
     await this.getFinalTime(time);
     console.log(this.hora_final)
     console.log(this.hora_inicio)
@@ -109,7 +110,7 @@ export class TareaComponent implements OnInit {
           Swal.fire('Tarea registrada', `<strong>
          Su tarea fue registrada correctamente
         </strong>`, 'success');
-        location.pathname = 'home/registroTarea';
+         // location.pathname = 'home/registroTarea';
         })
         .catch((error) => {
           console.log(error)
